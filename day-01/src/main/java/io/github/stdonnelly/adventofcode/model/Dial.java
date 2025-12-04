@@ -1,6 +1,8 @@
 package io.github.stdonnelly.adventofcode.model;
 
 public class Dial {
+    // The number to apply a modulo against
+    private static final int BASE = 100;
     // The number the dial is pointing at
     private int state;
 
@@ -35,6 +37,8 @@ public class Dial {
      * @param instruction How to move the dial
      */
     public void moveDial(Instruction instruction) {
-        throw new UnsupportedOperationException("TODO");
+        // The Instruction will not return the dial as a normalized (between 0 and 99) state
+        final int nonNormalizedState = instruction.applyAsInt(state);
+        state = Math.floorMod(nonNormalizedState, BASE);
     }
 }

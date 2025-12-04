@@ -1,12 +1,14 @@
 package io.github.stdonnelly.adventofcode.model;
 
+import java.util.function.IntUnaryOperator;
+
 /**
  * Represents an instruction for the safe
  * 
  * @param direction Left (less) or Right (more)
  * @param distance How far to go in the given direction
  */
-public record Instruction(Direction direction, int distance) {
+public record Instruction(Direction direction, int distance) implements IntUnaryOperator {
     /**
      * Parse an input object as 
      * @param input
@@ -24,12 +26,16 @@ public record Instruction(Direction direction, int distance) {
     }
 
     /**
-     * Moves the dial according to this instruction
+     * Moves the dial according to this instruction.
+     * 
+     * This function does not guarantee any maximum or minimum position. The caller will need to perform modulo.
      * 
      * @param dial The current state of the dial
      * @return The state of the dial after changing
      */
-    int applyToDial(int dial) {
-        throw new UnsupportedOperationException("TODO");
+    @Override
+    public int applyAsInt(int dial) {
+        final int signedDistance = distance * direction.getNumericDirection();
+        return dial + signedDistance;
     }
 }
