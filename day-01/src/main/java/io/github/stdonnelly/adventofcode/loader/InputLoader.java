@@ -25,7 +25,7 @@ public class InputLoader {
      * @throws IOException if there is a problem loading the input.txt file, or if there is a problem reading the file
      */
     public List<Instruction> load() throws IOException {
-        try (InputStream is = this.getClass().getResourceAsStream(IN_FILE_NAME);
+        try (InputStream is = this.getClass().getClassLoader().getResourceAsStream(IN_FILE_NAME);
                 InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
                 BufferedReader reader = new BufferedReader(isr)) {
             if (is == null) {

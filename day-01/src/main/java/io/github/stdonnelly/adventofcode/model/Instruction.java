@@ -7,8 +7,20 @@ package io.github.stdonnelly.adventofcode.model;
  * @param distance How far to go in the given direction
  */
 public record Instruction(Direction direction, int distance) {
+    /**
+     * Parse an input object as 
+     * @param input
+     * @return
+     * @throws IllegalArgumentException
+     */
     public static Instruction parse(String input) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("TODO");
+        if (input.length() < 2) {
+            throw new IllegalArgumentException("Instruction too short, at least 2 characters are expected");
+        }
+
+        final Direction direction = Direction.parse(input.charAt(0));
+        final int distance = Integer.parseInt(input.substring(1));
+        return new Instruction(direction, distance);
     }
 
     /**
