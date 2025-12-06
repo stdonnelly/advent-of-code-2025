@@ -3,6 +3,7 @@ package io.github.stdonnelly.adventofcode.service;
 import java.util.List;
 
 import io.github.stdonnelly.adventofcode.model.Dial;
+import io.github.stdonnelly.adventofcode.model.Direction;
 import io.github.stdonnelly.adventofcode.model.Instruction;
 
 /**
@@ -23,9 +24,6 @@ public class ZeroCounter {
         for (final Instruction instruction : instructions) {
             dial.moveDial(instruction);
 
-            // System.out.println("Instruction: " + instruction + ", + state: " +
-            // dial.getState());
-
             if (dial.getState() == 0) {
                 zeroCount++;
             }
@@ -44,7 +42,25 @@ public class ZeroCounter {
      * @return The number of times the dial hits zero
      */
     public int countAllZerosDuringExecution(final Dial dial, final List<Instruction> instructions) {
-        throw new UnsupportedOperationException("TODO");
-    }
+        int zeroCount = 0;
+        for (final Instruction instruction : instructions) {
+            // Special case: if we start on zero, ignore the rollover because the zero was
+            // already counted
+            if ((dial.getState() == 0) && Direction.Left.equals(instruction.direction())) {
+                zeroCount--;
+            }
 
+            dial.moveDialWithoutWrap(instruction);
+            zeroCount += dial.normalize();
+
+            // Special case: if we end on zero while moving left, there is no rollover, but
+            // the zero should still be counted
+            // Count if it starts on zero
+            if ((dial.getState() == 0) && Direction.Left.equals(instruction.direction())) {
+                zeroCount++;
+            }
+        }
+
+        return zeroCount;
+    }
 }

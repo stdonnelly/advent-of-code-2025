@@ -1,24 +1,23 @@
 package io.github.stdonnelly.adventofcode.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
 import io.github.stdonnelly.adventofcode.loader.InputLoader;
 import io.github.stdonnelly.adventofcode.model.Dial;
 import io.github.stdonnelly.adventofcode.model.Instruction;
 
-public class ZeroCounterTest {
+class ZeroCounterTest {
+    private static final String EXAMPLE_FILE_NAME = "example_input.txt";
+    private static final String CSV_FILE_NAME = "/part_2_testcases.csv";
     private final ZeroCounter zeroCounter = new ZeroCounter();
 
     /**
@@ -30,7 +29,7 @@ public class ZeroCounterTest {
     void countZerosDuringExecutionTest() throws IOException {
         final int EXPECTED_COUNT = 3;
 
-        final InputLoader inputLoader = new InputLoader("example_input.txt");
+        final InputLoader inputLoader = new InputLoader(EXAMPLE_FILE_NAME);
         final List<Instruction> instructions = inputLoader.load();
 
         assertEquals(EXPECTED_COUNT, zeroCounter.countZerosDuringExecution(new Dial(), instructions));
@@ -43,10 +42,9 @@ public class ZeroCounterTest {
      */
     @Test
     void countAllZerosDuringExecutionTest() throws IOException {
-        fail("foo");
         final int EXPECTED_COUNT = 6;
 
-        final InputLoader inputLoader = new InputLoader("example_input.txt");
+        final InputLoader inputLoader = new InputLoader(EXAMPLE_FILE_NAME);
         final List<Instruction> instructions = inputLoader.load();
 
         assertEquals(EXPECTED_COUNT, zeroCounter.countAllZerosDuringExecution(new Dial(), instructions));
@@ -58,13 +56,21 @@ public class ZeroCounterTest {
      * @throws IOException if the input loading fails
      */
     @ParameterizedTest
-    @MethodSource("instructionProvider")
-    void countAllZerosDuringExecutionParameterizedTest(final List<Instruction> instructions, final int expected) {
-        assertEquals(expected, zeroCounter.countZerosDuringExecution(new Dial(), instructions));
-    }
+    @CsvFileSource(resources = CSV_FILE_NAME, useHeadersInDisplayName = true)
+    void countAllZerosDuringExecutionParameterizedTest(final String description, final String instructionsStr,
+            final int expected) {
 
-    static Stream<Arguments> instructionProvider() {
-        return Stream.of(
-                arguments(Collections.emptyList(), 0));
+        List<Instruction> instructions;
+
+        if (instructionsStr != null && !instructionsStr.isBlank()) {
+            final String[] instructionsArray = instructionsStr.split(":");
+            instructions = Arrays.stream(instructionsArray)
+                    .map(Instruction::parse)
+                    .toList();
+        } else {
+            instructions = Collections.emptyList();
+        }
+
+        assertEquals(expected, zeroCounter.countAllZerosDuringExecution(new Dial(), instructions), description);
     }
 }

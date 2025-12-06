@@ -37,8 +37,29 @@ public class Dial {
      * @param instruction How to move the dial
      */
     public void moveDial(Instruction instruction) {
-        // The Instruction will not return the dial as a normalized (between 0 and 99) state
-        final int nonNormalizedState = instruction.applyAsInt(state);
-        state = Math.floorMod(nonNormalizedState, BASE);
+        this.moveDialWithoutWrap(instruction);
+        this.normalize();
+    }
+
+    /**
+     * Move the dial according to the instruction, but do not apply the modulo
+     * 
+     * @param instruction How to move the dial
+     */
+    public void moveDialWithoutWrap(Instruction instruction) {
+        this.state = instruction.applyAsInt(state);
+    }
+
+    /**
+     * Normalize the dial by applying modulo 100
+     * 
+     * @return The number of times zero was encountered (not including state before
+     *         normalization)
+     */
+    public int normalize() {
+        final int quotient = Math.floorDiv(this.state, BASE);
+        this.state -= quotient * BASE;
+
+        return Math.abs(quotient);
     }
 }
