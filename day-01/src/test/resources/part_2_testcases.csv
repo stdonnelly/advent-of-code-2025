@@ -1,0 +1,12 @@
+DESCRIPTION,INSTRUCTIONS,EXPECTED
+Do nothing,"",0
+To 0 (to left),L50,1
+To 0 (to right),R50,1
+Past 0 (to left),L100,1
+Past 0 (to right),R100,1
+To and back (left-right),L50:R50,1
+To and back (right-left),R50:L50,1
+To and through (to left),L50:L50,1
+To and through (to right),R50:R50,1
+Narrow miss (to left),L49:R49,0
+Narrow miss (to right),R49:L49,0
