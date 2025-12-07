@@ -12,6 +12,7 @@
   </properties>
   <modules>
     <module>day-01</module>
+    <module>day-02</module>
     <module>day-archetype</module>
   </modules>
   <build>
