@@ -1,13 +1,11 @@
 package io.github.stdonnelly.adventofcode.day02.loader;
 
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Scanner;
 
 import io.github.stdonnelly.adventofcode.day02.model.IdRange;
 
@@ -36,13 +34,15 @@ public class InputLoader {
      */
     public List<IdRange> load() throws IOException {
         try (InputStream is = this.getClass().getClassLoader().getResourceAsStream(inFileName);
-                InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
-                BufferedReader reader = new BufferedReader(isr)) {
+                Scanner scanner = new Scanner(is, StandardCharsets.UTF_8)) {
             if (is == null) {
                 throw new FileNotFoundException(inFileName + " not found");
             }
 
-            return reader.lines()
+            scanner.useDelimiter(",");
+
+            return scanner.tokens()
+                    .map(String::trim)
                     .map(IdRange::parse)
                     .toList();
         }
