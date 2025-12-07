@@ -14,7 +14,7 @@
   <artifactId>${artifactId}</artifactId>
   <version>${version}</version>
 
-  <name>${groupId}</name>
+  <name>${artifactId}</name>
 
   <build>
     <plugins>
