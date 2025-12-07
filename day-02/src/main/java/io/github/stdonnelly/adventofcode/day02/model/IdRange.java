@@ -47,4 +47,9 @@ public record IdRange(long start, long end) {
     public boolean contains(long other) {
         return this.start <= other && other <= this.end;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%d-%d", start, end);
+    }
 }

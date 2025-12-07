@@ -18,3 +18,9 @@ buildNumber.properties
 
 # input.txt will contain my input for the problem.
 input.txt
+
+# Output files generated from any application
+output.txt
+output.yaml
+output.csv
+output.json
