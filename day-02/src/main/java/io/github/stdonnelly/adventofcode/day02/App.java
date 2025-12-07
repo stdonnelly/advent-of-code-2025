@@ -38,6 +38,7 @@ public class App
     }
 
     static long part1(final List<IdRange> input) {
+        // TODO: iterate over ranges, gather all invalid Ids, and output them
         return -1;
     }
 

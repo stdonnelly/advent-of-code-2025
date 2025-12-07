@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -11,7 +14,40 @@ import org.junit.jupiter.params.provider.ValueSource;
 import io.github.stdonnelly.adventofcode.day02.model.IdRange;
 
 class InvalidIdIteratorTest {
-    InvalidIdIterator invalidIdIterator = new InvalidIdIterator(new IdRange(1, 20));
+    // An iterator for the tests where range doesn't matter
+    private final InvalidIdIterator invalidIdIterator120 = new InvalidIdIterator(new IdRange(1, 20));
+
+    @ParameterizedTest
+    @CsvSource(textBlock = """
+            11-22,11:22
+            95-115,99
+            998-1012,1010
+            1188511880-1188511890,1188511885
+            222220-222224,222222
+            1698522-1698528,''
+            446443-446449,446446
+            38593856-38593862,38593859
+            2121212118-2121212124,''
+            """)
+    void invalidIdIterationTest(String rangeStr, String invalidIdsStr) {
+        final InvalidIdIterator invalidIdIterator = new InvalidIdIterator(IdRange.parse(rangeStr.trim()));
+
+        List<Long> expectedInvalidIds;
+        if (invalidIdsStr == null || invalidIdsStr.isBlank()) {
+            expectedInvalidIds = List.of();
+        } else {
+            expectedInvalidIds = Arrays.stream(invalidIdsStr.split(":"))
+                    .map(Long::parseLong)
+                    .toList();
+        }
+
+        for (long expectedInvalidId : expectedInvalidIds) {
+            assertTrue(invalidIdIterator.hasNext(), () -> "Expected ID " + expectedInvalidId);
+            assertEquals(expectedInvalidId, invalidIdIterator.next());
+        }
+
+        assertFalse(invalidIdIterator.hasNext(), "There shouldn't be any more invalid IDs");
+    }
 
     @ParameterizedTest
     @CsvSource(textBlock = """
@@ -23,7 +59,7 @@ class InvalidIdIteratorTest {
             100,3
             """)
     void floorLogTest(final long number, final int expected) {
-        assertEquals(expected, invalidIdIterator.floorLog(number), () -> String.format("floorLog(%d)", number));
+        assertEquals(expected, invalidIdIterator120.floorLog(number), () -> String.format("floorLog(%d)", number));
     }
 
     @ParameterizedTest
@@ -35,7 +71,7 @@ class InvalidIdIteratorTest {
             38593859L,
     })
     void isInvalidIdTest_true(long num) {
-        assertTrue(invalidIdIterator.isInvalidId(num), () -> num + " should be considered invalid");
+        assertTrue(invalidIdIterator120.isInvalidId(num), () -> num + " should be considered invalid");
     }
 
     @ParameterizedTest
@@ -50,6 +86,6 @@ class InvalidIdIteratorTest {
             111L
     })
     void isInvalidIdTest_false(long num) {
-        assertFalse(invalidIdIterator.isInvalidId(num), () -> num + " should not be considered invalid");
+        assertFalse(invalidIdIterator120.isInvalidId(num), () -> num + " should not be considered invalid");
     }
 }

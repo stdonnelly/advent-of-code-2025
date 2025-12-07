@@ -35,6 +35,7 @@ public class InvalidIdIterator implements Iterator<Long> {
 
         // Always false if this is outside the range
         if (next >= end) {
+            invalidState = true;
             return false;
         }
 
@@ -44,10 +45,12 @@ public class InvalidIdIterator implements Iterator<Long> {
         while (!isInvalidId(next)) {
             next++;
             if (next > end) {
+                invalidState = true;
                 return false;
             }
         }
 
+        invalidState = false;
         return true;
     }
 
