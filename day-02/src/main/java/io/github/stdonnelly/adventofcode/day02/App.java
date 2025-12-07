@@ -15,6 +15,7 @@ import io.github.stdonnelly.adventofcode.day02.model.IdRange;
 /// 
 /// * Ranges are given as `start-end` *inclusively*. E.g. `11-22`.
 /// * Leading zeros don't count. `0101` is **not** considered invalid.
+/// * Assumption: There are no overlaps. Checked by (AppTest.noOverlapsTest)[io.github.stdonnelly.adventofcode.day02.AppTest.noOverlapsTest]
 public class App
 {
     private static final String IN_FILE_NAME = "input.txt";
