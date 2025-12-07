@@ -27,6 +27,9 @@ under the License.
 
   <requiredProperties>
     <requiredProperty key="dayNumber" />
+    <requiredProperty key="inputDatum">
+      <defaultValue>Item</defaultValue>
+    </requiredProperty>
     <requiredProperty key="groupId">
       <defaultValue>io.github.stdonnelly.adventofcode</defaultValue>
     </requiredProperty>
