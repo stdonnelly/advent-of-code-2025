@@ -1,5 +1,11 @@
 package io.github.stdonnelly.adventofcode.day02;
 
+import java.io.IOException;
+import java.util.List;
+
+import io.github.stdonnelly.adventofcode.day02.loader.InputLoader;
+import io.github.stdonnelly.adventofcode.day02.model.IdRange;
+
 /// Add together all *invalid* IDs in a given set of ranges
 /// 
 /// Definition of invalid: Exactly a sequence of digits that are repeated twice.
@@ -13,20 +19,28 @@ public class App
 {
     private static final String IN_FILE_NAME = "input.txt";
 
-    public static void main( String[] args )
+    public static void main(String[] args)
     {
-        final var part1Answer = part1();
-        System.out.println("Part 1: " + part1Answer);
+        final InputLoader inputLoader = new InputLoader(IN_FILE_NAME);
 
-        final var part2Answer = part2();
-        System.out.println("Part 2: " + part2Answer);
+        try {
+            final List<IdRange> input = inputLoader.load();
+
+            final var part1Answer = part1(input);
+            System.out.println("Part 1: " + part1Answer);
+
+            final var part2Answer = part2(input);
+            System.out.println("Part 2: " + part2Answer);
+        } catch (IOException e) {
+            System.err.println(e);
+        }
     }
 
-    static long part1() {
+    static long part1(final List<IdRange> input) {
         return -1;
     }
 
-    static long part2() {
+    static long part2(final List<IdRange> input) {
         return -1;
     }
 }
