@@ -2,9 +2,13 @@ package ${package};
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.IOException;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
-import ${package}.App;
+import ${package}.loader.InputLoader;
+import ${package}.model.${inputDatum};
 
 class AppTest
 {
@@ -16,10 +20,12 @@ class AppTest
      * @throws IOException if the input loading fails
      */
     @Test
-    public void part1Test()
+    void part1Test() throws IOException
     {
         final int EXPECTED = -1;
-        assertEquals(EXPECTED, App.part1());
+        final InputLoader inputLoader = new InputLoader(EXAMPLE_FILE_NAME);
+        final List<${inputDatum}> input = inputLoader.load();
+        assertEquals(EXPECTED, App.part1(input));
     }
 
     /**
@@ -28,9 +34,11 @@ class AppTest
      * @throws IOException if the input loading fails
      */
     @Test
-    public void part2Test()
+    void part2Test() throws IOException
     {
         final int EXPECTED = -1;
-        assertEquals(EXPECTED, App.part2());
+        final InputLoader inputLoader = new InputLoader(EXAMPLE_FILE_NAME);
+        final List<${inputDatum}> input = inputLoader.load();
+        assertEquals(EXPECTED, App.part2(input));
     }
 }
