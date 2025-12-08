@@ -1,0 +1,30 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://github.com/stdonnelly/advent-of-code-2025/blob/day-02/day-02/src/main/resources/output.schema.json",
+    "title": "Day2Output",
+    "description": "The output format for day 2",
+    "type": "object",
+    "properties": {
+        "ranges": {
+            "description": "The range of numbers that this output contains",
+            "type": "array",
+            "items": {
+                "type": "string",
+                "pattern": "^(\\d+)-(\\d+)$"
+            },
+            "uniqueItems": true
+        },
+        "invalid_ids": {
+            "description": "A list of IDs in the range that are considered invalid",
+            "type": "array",
+            "items": {
+                "type": "integer"
+            },
+            "uniqueItems": false
+        }
+    },
+    "required": [
+        "ranges",
+        "invalid_ids"
+    ]
+}
