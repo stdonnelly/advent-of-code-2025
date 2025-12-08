@@ -55,12 +55,7 @@ public class App {
 
         // Try to write the output to a file
         try (ResultWriter resultWriter = new ResultWriter(Paths.get("output.yaml"))) {
-            // Map to array of primitives
-            final long[] invalidIdsArr = invalidIds.stream()
-                    .mapToLong(Long::longValue)
-                    .toArray();
-
-            resultWriter.write(input.get(0), invalidIdsArr);
+            resultWriter.write(input, invalidIds);
         } catch (IOException | YAMLException e) {
             System.err.println("Error writing the results");
             e.printStackTrace();

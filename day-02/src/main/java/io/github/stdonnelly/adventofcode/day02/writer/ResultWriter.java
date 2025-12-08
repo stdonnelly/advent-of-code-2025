@@ -31,24 +31,23 @@ public class ResultWriter implements AutoCloseable {
         dumperOptions.setDefaultFlowStyle(FlowStyle.BLOCK);
         yaml = new Yaml(dumperOptions);
 
-
-        
         // Write the comment to link this to the schema file
-        writer.write("# yaml-language-server: $schema=https://raw.githubusercontent.com/stdonnelly/advent-of-code-2025/refs/heads/day-02/day-02/src/main/resources/output.schema.json\n\n");
+        writer.write(
+                "# yaml-language-server: $schema=https://raw.githubusercontent.com/stdonnelly/advent-of-code-2025/refs/heads/day-02/day-02/src/main/resources/output.schema.json\n\n");
     }
 
     /// Write the range and invalid Ids to the file
     /// 
-    /// @param range      The range to output
-    /// @param invalidIds The array of invalid IDs to output
-    public void write(IdRange range, long[] invalidIds) {
+    /// @param ranges     The ranges to output
+    /// @param invalidIds The List of invalid IDs to output
+    public void write(List<IdRange> ranges, List<Long> invalidIds) {
         // LinkedHashMap to preserve order
         LinkedHashMap<String, Object> map = new LinkedHashMap<>();
-        map.put("range", range.toString());
+        map.put("ranges", ranges.stream().map(IdRange::toString).toList());
         map.put("invalid_ids", invalidIds);
 
         // Dump as a singleton list
-        yaml.dump(List.of(map), writer);
+        yaml.dump(map, writer);
     }
 
     @Override
