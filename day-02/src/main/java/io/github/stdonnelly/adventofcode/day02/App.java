@@ -1,10 +1,17 @@
 package io.github.stdonnelly.adventofcode.day02;
 
 import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.StreamSupport;
+
+import org.yaml.snakeyaml.error.YAMLException;
 
 import io.github.stdonnelly.adventofcode.day02.loader.InputLoader;
 import io.github.stdonnelly.adventofcode.day02.model.IdRange;
+import io.github.stdonnelly.adventofcode.day02.service.InvalidIdSpliterator;
+import io.github.stdonnelly.adventofcode.day02.writer.ResultWriter;
 
 /// Add together all *invalid* IDs in a given set of ranges
 /// 
@@ -13,15 +20,15 @@ import io.github.stdonnelly.adventofcode.day02.model.IdRange;
 /// 
 /// Notes:
 /// 
-/// * Ranges are given as `start-end` *inclusively*. E.g. `11-22`.
-/// * Leading zeros don't count. `0101` is **not** considered invalid.
-/// * Assumption: There are no overlaps. Checked by (AppTest.noOverlapsTest)[io.github.stdonnelly.adventofcode.day02.AppTest.noOverlapsTest]
-public class App
-{
+/// * Ranges are given as `start-end` *inclusively*. E.g. `11-22`. * Leading
+/// zeros don't count. `0101` is **not** considered invalid. * Assumption: There
+/// are no overlaps. Checked by
+/// (AppTest.noOverlapsTest)[io.github.stdonnelly.adventofcode.day02.
+/// AppTest. noOverlapsTest]
+public class App {
     private static final String IN_FILE_NAME = "input.txt";
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         final InputLoader inputLoader = new InputLoader(IN_FILE_NAME);
 
         try {
@@ -38,8 +45,28 @@ public class App
     }
 
     static long part1(final List<IdRange> input) {
-        // TODO: iterate over ranges, gather all invalid Ids, and output them
-        return -1;
+        final List<Long> invalidIds = new ArrayList<>();
+
+        final long invalidIdsSum = input.stream()
+                .map(InvalidIdSpliterator::new)
+                .flatMapToLong(spliterator -> StreamSupport.longStream(spliterator, false))
+                .peek(invalidIds::add)
+                .sum();
+
+        // Try to write the output to a file
+        try (ResultWriter resultWriter = new ResultWriter(Paths.get("output.yaml"))) {
+            // Map to array of primitives
+            final long[] invalidIdsArr = invalidIds.stream()
+                    .mapToLong(Long::longValue)
+                    .toArray();
+
+            resultWriter.write(input.get(0), invalidIdsArr);
+        } catch (IOException | YAMLException e) {
+            System.err.println("Error writing the results");
+            e.printStackTrace();
+        }
+
+        return invalidIdsSum;
     }
 
     static long part2(final List<IdRange> input) {

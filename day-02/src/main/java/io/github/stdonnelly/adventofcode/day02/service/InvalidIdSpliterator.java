@@ -1,67 +1,65 @@
 package io.github.stdonnelly.adventofcode.day02.service;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.Comparator;
+import java.util.Objects;
+import java.util.Spliterator;
+import java.util.Spliterators.AbstractLongSpliterator;
+import java.util.function.LongConsumer;
 
 import io.github.stdonnelly.adventofcode.day02.model.IdRange;
 
 /// Iterator over invalid IDs in a given [IdRange]
 /// 
-/// "Invalid" is defined in [Advent of code 2025:
+/// "Invalid" is defined in [Advent of code 2025
 /// Day 2](https://adventofcode.com/2025/day/2)
-public class InvalidIdIterator implements Iterator<Long> {
+public class InvalidIdSpliterator extends AbstractLongSpliterator {
     // The number to be returned by next()
     private long next;
     // The last number (inclusive)
     private long end;
-    // A flag to determine if this state is valid
-    private boolean invalidState;
 
     /// Construct a new instance
     /// 
     /// @param range the [IdRange] to iterate over
-    public InvalidIdIterator(IdRange range) {
+    public InvalidIdSpliterator(IdRange range) {
         // Set the next to before the start.
         // That way, if start is invalid
         next = range.start() - 1;
         end = range.end();
 
-        invalidState = true;
+        super(Long.MAX_VALUE, Spliterator.ORDERED
+                | Spliterator.DISTINCT
+                | Spliterator.SORTED
+                | Spliterator.NONNULL
+                | Spliterator.IMMUTABLE);
     }
 
     @Override
-    public boolean hasNext() {
+    public boolean tryAdvance(LongConsumer consumer) {
+        Objects.requireNonNull(consumer);
+
         // Naive implementation: just go through every number and check if it is invalid
 
-        // Always false if this is outside the range
-        if (next >= end) {
-            invalidState = true;
-            return false;
-        }
-
-        // Start by incrementing and continue until we get to an id that is an invalid
-        // id.
-        next++;
-        while (!isInvalidId(next)) {
+        // Always false if this will put `next` outside the range
+        while (next < end) {
+            // Start by incrementing and continue until we get to an id that is an invalid
+            // id.
             next++;
-            if (next > end) {
-                invalidState = true;
-                return false;
+
+            // Success if this is considered and invalid ID.
+            if (isInvalidId(next)) {
+                consumer.accept(next);
+                return true;
             }
         }
 
-        invalidState = false;
-        return true;
+        // If all numbers are exhausted, return failure
+        return false;
     }
 
     @Override
-    public Long next() {
-        // Check if the state is valid
-        if (invalidState) {
-            throw new NoSuchElementException();
-        }
-
-        return next;
+    public Comparator<Long> getComparator() {
+        return Long::compare;
     }
 
     /// Returns true if the number is an "invalid" ID
