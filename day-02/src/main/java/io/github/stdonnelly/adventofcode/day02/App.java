@@ -11,6 +11,7 @@ import org.yaml.snakeyaml.error.YAMLException;
 import io.github.stdonnelly.adventofcode.day02.loader.InputLoader;
 import io.github.stdonnelly.adventofcode.day02.model.IdRange;
 import io.github.stdonnelly.adventofcode.day02.service.InvalidIdSpliterator;
+import io.github.stdonnelly.adventofcode.day02.service.InvalidIdSpliteratorPart2;
 import io.github.stdonnelly.adventofcode.day02.writer.ResultWriter;
 
 /// Add together all *invalid* IDs in a given set of ranges
@@ -65,6 +66,22 @@ public class App {
     }
 
     static long part2(final List<IdRange> input) {
-        return -1;
+        final List<Long> invalidIds = new ArrayList<>();
+
+        final long invalidIdsSum = input.stream()
+                .map(InvalidIdSpliteratorPart2::new)
+                .flatMapToLong(spliterator -> StreamSupport.longStream(spliterator, false))
+                .peek(invalidIds::add)
+                .sum();
+
+        // Try to write the output to a file
+        try (ResultWriter resultWriter = new ResultWriter(Paths.get("output_part2.yaml"))) {
+            resultWriter.write(input, invalidIds);
+        } catch (IOException | YAMLException e) {
+            System.err.println("Error writing the results");
+            e.printStackTrace();
+        }
+
+        return invalidIdsSum;
     }
 }
