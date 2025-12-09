@@ -10,9 +10,33 @@ import io.github.stdonnelly.adventofcode.day02.model.IdRange;
 
 /// Iterator over invalid IDs in a given [IdRange]
 /// 
-/// "Invalid" is defined in [Advent of code 2025
-/// Day 2](https://adventofcode.com/2025/day/2)
+/// "Invalid" is defined in <a href="https://adventofcode.com/2025/day/2">Advent
+/// of code 2025 Day 2</a>
 public class InvalidIdSpliterator extends AbstractLongSpliterator {
+    // An array to store a precomputed list of powers of 10
+    // This might save a little computation over Math.powExact(10,n) every time.
+    protected static final long[] EXPONENT = {
+            1L,
+            10L,
+            100L,
+            1000L,
+            10000L,
+            100000L,
+            1000000L,
+            10000000L,
+            100000000L,
+            1000000000L,
+            10000000000L,
+            100000000000L,
+            1000000000000L,
+            10000000000000L,
+            100000000000000L,
+            1000000000000000L,
+            10000000000000000L,
+            100000000000000000L,
+            1000000000000000000L,
+    };
+
     // The number to be returned by next()
     private long next;
     // The last number (inclusive)
@@ -22,16 +46,16 @@ public class InvalidIdSpliterator extends AbstractLongSpliterator {
     /// 
     /// @param range the [IdRange] to iterate over
     public InvalidIdSpliterator(IdRange range) {
-        // Set the next to before the start.
-        // That way, if start is invalid
-        next = range.start() - 1;
-        end = range.end();
-
         super(Long.MAX_VALUE, Spliterator.ORDERED
                 | Spliterator.DISTINCT
                 | Spliterator.SORTED
                 | Spliterator.NONNULL
                 | Spliterator.IMMUTABLE);
+
+        // Set the next to before the start.
+        // That way, if start is invalid
+        next = range.start() - 1;
+        end = range.end();
     }
 
     @Override
@@ -65,6 +89,7 @@ public class InvalidIdSpliterator extends AbstractLongSpliterator {
     /// Returns true if the number is an "invalid" ID
     /// 
     /// @param num The number to check
+    /// @return `true` if the number is "invalid", `false` otherwise.
     boolean isInvalidId(long num) {
         final int length = floorLog(num);
 
@@ -74,7 +99,7 @@ public class InvalidIdSpliterator extends AbstractLongSpliterator {
         }
 
         // Not sure what to call this. It is 10^(length/2)
-        final long halfExponent = Math.powExact(10L, length / 2);
+        final long halfExponent = EXPONENT[length / 2];
 
         // Return true if the first half is the same as the last half
         return num / halfExponent == num % halfExponent;
@@ -83,6 +108,7 @@ public class InvalidIdSpliterator extends AbstractLongSpliterator {
     /// Returns the floor of log_10(num)
     /// 
     /// @param num The number
+    /// @return The number of digits in the provided number
     int floorLog(long num) {
         // Validation
         if (num < 0) {

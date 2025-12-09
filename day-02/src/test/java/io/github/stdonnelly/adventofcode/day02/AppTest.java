@@ -36,7 +36,7 @@ class AppTest {
      */
     @Test
     void part2Test() throws IOException {
-        final long EXPECTED = -1;
+        final long EXPECTED = 4174379265L;
         final InputLoader inputLoader = new InputLoader(EXAMPLE_FILE_NAME);
         final List<IdRange> input = inputLoader.load();
         assertEquals(EXPECTED, App.part2(input));
