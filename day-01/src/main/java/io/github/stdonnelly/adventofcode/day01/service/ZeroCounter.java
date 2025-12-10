@@ -1,10 +1,10 @@
-package io.github.stdonnelly.adventofcode.service;
+package io.github.stdonnelly.adventofcode.day01.service;
 
 import java.util.List;
 
-import io.github.stdonnelly.adventofcode.model.Dial;
-import io.github.stdonnelly.adventofcode.model.Direction;
-import io.github.stdonnelly.adventofcode.model.Instruction;
+import io.github.stdonnelly.adventofcode.day01.model.Dial;
+import io.github.stdonnelly.adventofcode.day01.model.Direction;
+import io.github.stdonnelly.adventofcode.day01.model.Instruction;
 
 /**
  * Counts zeros with the given {@link Dial} and {@link List} of

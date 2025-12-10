@@ -1,4 +1,4 @@
-package io.github.stdonnelly.adventofcode.loader;
+package io.github.stdonnelly.adventofcode.day01.loader;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import io.github.stdonnelly.adventofcode.model.Instruction;
+import io.github.stdonnelly.adventofcode.day01.model.Instruction;
 
 /**
  * Loads the input file

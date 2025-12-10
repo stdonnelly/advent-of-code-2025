@@ -1,12 +1,12 @@
-package io.github.stdonnelly.adventofcode;
+package io.github.stdonnelly.adventofcode.day01;
 
 import java.io.IOException;
 import java.util.List;
 
-import io.github.stdonnelly.adventofcode.loader.InputLoader;
-import io.github.stdonnelly.adventofcode.model.Dial;
-import io.github.stdonnelly.adventofcode.model.Instruction;
-import io.github.stdonnelly.adventofcode.service.ZeroCounter;
+import io.github.stdonnelly.adventofcode.day01.loader.InputLoader;
+import io.github.stdonnelly.adventofcode.day01.model.Dial;
+import io.github.stdonnelly.adventofcode.day01.model.Instruction;
+import io.github.stdonnelly.adventofcode.day01.service.ZeroCounter;
 
 /**
  * First day of Advent of Code 2025

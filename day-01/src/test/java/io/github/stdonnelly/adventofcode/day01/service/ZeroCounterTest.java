@@ -1,4 +1,4 @@
-package io.github.stdonnelly.adventofcode.service;
+package io.github.stdonnelly.adventofcode.day01.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -11,9 +11,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 
-import io.github.stdonnelly.adventofcode.loader.InputLoader;
-import io.github.stdonnelly.adventofcode.model.Dial;
-import io.github.stdonnelly.adventofcode.model.Instruction;
+import io.github.stdonnelly.adventofcode.day01.loader.InputLoader;
+import io.github.stdonnelly.adventofcode.day01.model.Dial;
+import io.github.stdonnelly.adventofcode.day01.model.Instruction;
 
 class ZeroCounterTest {
     private static final String EXAMPLE_FILE_NAME = "example_input.txt";

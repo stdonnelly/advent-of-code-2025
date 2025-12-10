@@ -1,4 +1,4 @@
-package io.github.stdonnelly.adventofcode.model;
+package io.github.stdonnelly.adventofcode.day01.model;
 
 /**
  * Represents a direction (left or right)
