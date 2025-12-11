@@ -37,7 +37,7 @@ class AppTest
     @Test
     void part2Test() throws IOException
     {
-        final int EXPECTED = -1;
+        final long EXPECTED = 3121910778619L;
         final InputLoader inputLoader = new InputLoader(EXAMPLE_FILE_NAME);
         final List<BatteryBank> input = inputLoader.load();
         assertEquals(EXPECTED, App.part2(input));

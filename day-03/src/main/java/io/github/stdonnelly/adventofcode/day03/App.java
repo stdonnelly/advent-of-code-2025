@@ -5,6 +5,7 @@ import java.util.List;
 
 import io.github.stdonnelly.adventofcode.day03.loader.InputLoader;
 import io.github.stdonnelly.adventofcode.day03.model.BatteryBank;
+import io.github.stdonnelly.adventofcode.day03.service.Max12Calculator;
 import io.github.stdonnelly.adventofcode.day03.service.MaxPairCalculator;
 
 /**
@@ -38,7 +39,11 @@ public class App {
                 .sum();
     }
 
-    public static int part2(final List<BatteryBank> input) {
-        return -1;
+    public static long part2(final List<BatteryBank> input) {
+        Max12Calculator max12Calculator = new Max12Calculator();
+
+        return input.stream()
+                .mapToLong(max12Calculator)
+                .sum();
     }
 }
