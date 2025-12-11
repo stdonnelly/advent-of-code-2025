@@ -10,12 +10,10 @@ import ${package}.model.${inputDatum};
  * Day ${dayNumber} solver
  *
  */
-public class App
-{
+public class App {
     private static final String IN_FILE_NAME = "input.txt";
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         final InputLoader inputLoader = new InputLoader(IN_FILE_NAME);
 
         try {

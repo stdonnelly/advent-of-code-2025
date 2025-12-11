@@ -5,17 +5,16 @@ import java.util.List;
 
 import io.github.stdonnelly.adventofcode.day03.loader.InputLoader;
 import io.github.stdonnelly.adventofcode.day03.model.BatteryBank;
+import io.github.stdonnelly.adventofcode.day03.service.MaxPairCalculator;
 
 /**
  * Day 03 solver
  *
  */
-public class App
-{
+public class App {
     private static final String IN_FILE_NAME = "input.txt";
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         final InputLoader inputLoader = new InputLoader(IN_FILE_NAME);
 
         try {
@@ -31,11 +30,15 @@ public class App
         }
     }
 
-    static int part1(final List<BatteryBank> input) {
-        return -1;
+    public static int part1(final List<BatteryBank> input) {
+        MaxPairCalculator maxPairCalculator = new MaxPairCalculator();
+
+        return input.stream()
+                .mapToInt(maxPairCalculator)
+                .sum();
     }
 
-    static int part2(final List<BatteryBank> input) {
+    public static int part2(final List<BatteryBank> input) {
         return -1;
     }
 }
