@@ -4,5 +4,6 @@
         "adventofcode",
         "snakeyaml",
         "stdonnelly"
-    ]
+    ],
+    "java.format.settings.url": "eclipse-formatter.xml"
 }

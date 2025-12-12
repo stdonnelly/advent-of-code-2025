@@ -4,11 +4,6 @@
   xmlns="http://maven.apache.org/POM/4.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>io.github.stdonnelly.adventofcode</groupId>
-    <artifactId>advent-of-code-2025</artifactId>
-    <version>${version}</version>
-  </parent>
 
   <groupId>${groupId}</groupId>
   <artifactId>${artifactId}</artifactId>
