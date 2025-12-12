@@ -20,7 +20,8 @@ public class InputLoader {
     /**
      * Create an input file loader to load from the specified file
      * 
-     * @param inFileName The file to load from
+     * @param inFileName
+     *            The file to load from
      */
     public InputLoader(final String inFileName) {
         this.inFileName = inFileName;
@@ -31,8 +32,9 @@ public class InputLoader {
      * into a list of instructions
      * 
      * @return A List of Instructions from the file
-     * @throws IOException if there is a problem loading the input.txt file, or if
-     *                     there is a problem reading the file
+     * @throws IOException
+     *             if there is a problem loading the input.txt file, or if
+     *             there is a problem reading the file
      */
     public List<Instruction> load() throws IOException {
         try (InputStream is = this.getClass().getClassLoader().getResourceAsStream(inFileName);

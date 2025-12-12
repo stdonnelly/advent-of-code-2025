@@ -1,10 +1,5 @@
 package io.github.stdonnelly.adventofcode.day02.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,6 +8,11 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import io.github.stdonnelly.adventofcode.day02.model.IdRange;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class InvalidIdSpliteratorTest {
     // An iterator for the tests where range doesn't matter

@@ -1,7 +1,5 @@
 package io.github.stdonnelly.adventofcode.day03.test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -11,18 +9,19 @@ import io.github.stdonnelly.adventofcode.day03.App;
 import io.github.stdonnelly.adventofcode.day03.loader.InputLoader;
 import io.github.stdonnelly.adventofcode.day03.model.BatteryBank;
 
-class AppTest
-{
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class AppTest {
     private static final String EXAMPLE_FILE_NAME = "example_input.txt";
 
     /**
      * Test part 1 with the example input
      * 
-     * @throws IOException if the input loading fails
+     * @throws IOException
+     *             if the input loading fails
      */
     @Test
-    void part1Test() throws IOException
-    {
+    void part1Test() throws IOException {
         final int EXPECTED = 357;
         final InputLoader inputLoader = new InputLoader(EXAMPLE_FILE_NAME);
         final List<BatteryBank> input = inputLoader.load();
@@ -32,11 +31,11 @@ class AppTest
     /**
      * Test part 2 with the example input
      * 
-     * @throws IOException if the input loading fails
+     * @throws IOException
+     *             if the input loading fails
      */
     @Test
-    void part2Test() throws IOException
-    {
+    void part2Test() throws IOException {
         final long EXPECTED = 3121910778619L;
         final InputLoader inputLoader = new InputLoader(EXAMPLE_FILE_NAME);
         final List<BatteryBank> input = inputLoader.load();

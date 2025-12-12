@@ -45,7 +45,7 @@ public record BatteryBank(int[] batteries) {
     @Override
     public final String toString() {
         return Arrays.stream(this.batteries())
-            .mapToObj(Integer::toString)
-            .collect(Collectors.joining());
+                .mapToObj(Integer::toString)
+                .collect(Collectors.joining());
     }
 }

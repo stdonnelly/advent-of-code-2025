@@ -1,8 +1,5 @@
 package io.github.stdonnelly.adventofcode.day02;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -13,13 +10,17 @@ import org.junit.jupiter.params.provider.ValueSource;
 import io.github.stdonnelly.adventofcode.day02.loader.InputLoader;
 import io.github.stdonnelly.adventofcode.day02.model.IdRange;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 class AppTest {
     private static final String EXAMPLE_FILE_NAME = "example_input.txt";
 
     /**
      * Test part 1 with the example input
      * 
-     * @throws IOException if the input loading fails
+     * @throws IOException
+     *             if the input loading fails
      */
     @Test
     void part1Test() throws IOException {
@@ -32,7 +33,8 @@ class AppTest {
     /**
      * Test part 2 with the example input
      * 
-     * @throws IOException if the input loading fails
+     * @throws IOException
+     *             if the input loading fails
      */
     @Test
     void part2Test() throws IOException {
@@ -47,9 +49,11 @@ class AppTest {
      * 
      * This is to check an assumption before writing the actual code.
      * 
-     * @param inputFileName The file to check. This is parameterized because I want
-     *                      to check both the example and the real input.
-     * @throws IOException if the input loading fails
+     * @param inputFileName
+     *            The file to check. This is parameterized because I want
+     *            to check both the example and the real input.
+     * @throws IOException
+     *             if the input loading fails
      */
     @ParameterizedTest
     @ValueSource(strings = { EXAMPLE_FILE_NAME, "input.txt" })

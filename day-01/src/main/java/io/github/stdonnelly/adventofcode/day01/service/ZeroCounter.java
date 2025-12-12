@@ -15,8 +15,10 @@ public class ZeroCounter {
     /**
      * Count the number of times the dial hits 0 while executing the instructions
      * 
-     * @param dial         The dial to work on. Will be modified.
-     * @param instructions The instructions to apply to the dial
+     * @param dial
+     *            The dial to work on. Will be modified.
+     * @param instructions
+     *            The instructions to apply to the dial
      * @return The number of times the dial ends on zero
      */
     public int countZerosDuringExecution(final Dial dial, final List<Instruction> instructions) {
@@ -37,8 +39,10 @@ public class ZeroCounter {
      * 
      * This will count all zeros, not just when it ends on zero
      * 
-     * @param dial         The dial to work on. Will be modified.
-     * @param instructions The instructions to apply to the dial
+     * @param dial
+     *            The dial to work on. Will be modified.
+     * @param instructions
+     *            The instructions to apply to the dial
      * @return The number of times the dial hits zero
      */
     public int countAllZerosDuringExecution(final Dial dial, final List<Instruction> instructions) {

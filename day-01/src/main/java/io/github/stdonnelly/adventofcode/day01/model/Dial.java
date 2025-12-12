@@ -9,7 +9,8 @@ public class Dial {
     /**
      * Start the dial at a specific state
      * 
-     * @param state The number the dial should point at
+     * @param state
+     *            The number the dial should point at
      */
     public Dial(int state) {
         this.state = state;
@@ -34,7 +35,8 @@ public class Dial {
     /**
      * Move the dial according to the instruction
      * 
-     * @param instruction How to move the dial
+     * @param instruction
+     *            How to move the dial
      */
     public void moveDial(Instruction instruction) {
         this.moveDialWithoutWrap(instruction);
@@ -44,7 +46,8 @@ public class Dial {
     /**
      * Move the dial according to the instruction, but do not apply the modulo
      * 
-     * @param instruction How to move the dial
+     * @param instruction
+     *            How to move the dial
      */
     public void moveDialWithoutWrap(Instruction instruction) {
         this.state = instruction.applyAsInt(state);

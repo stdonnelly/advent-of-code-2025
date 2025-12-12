@@ -5,12 +5,15 @@ import java.util.function.IntUnaryOperator;
 /**
  * Represents an instruction for the safe
  * 
- * @param direction Left (less) or Right (more)
- * @param distance How far to go in the given direction
+ * @param direction
+ *            Left (less) or Right (more)
+ * @param distance
+ *            How far to go in the given direction
  */
 public record Instruction(Direction direction, int distance) implements IntUnaryOperator {
     /**
-     * Parse an input object as 
+     * Parse an input object as
+     * 
      * @param input
      * @return
      * @throws IllegalArgumentException
@@ -28,9 +31,11 @@ public record Instruction(Direction direction, int distance) implements IntUnary
     /**
      * Moves the dial according to this instruction.
      * 
-     * This function does not guarantee any maximum or minimum position. The caller will need to perform modulo.
+     * This function does not guarantee any maximum or minimum position. The caller
+     * will need to perform modulo.
      * 
-     * @param dial The current state of the dial
+     * @param dial
+     *            The current state of the dial
      * @return The state of the dial after changing
      */
     @Override

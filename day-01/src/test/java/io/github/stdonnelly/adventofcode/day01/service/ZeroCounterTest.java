@@ -1,7 +1,5 @@
 package io.github.stdonnelly.adventofcode.day01.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
@@ -15,6 +13,8 @@ import io.github.stdonnelly.adventofcode.day01.loader.InputLoader;
 import io.github.stdonnelly.adventofcode.day01.model.Dial;
 import io.github.stdonnelly.adventofcode.day01.model.Instruction;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class ZeroCounterTest {
     private static final String EXAMPLE_FILE_NAME = "example_input.txt";
     private static final String CSV_FILE_NAME = "/part_2_testcases.csv";
@@ -23,7 +23,8 @@ class ZeroCounterTest {
     /**
      * Test part 1 with the example input
      * 
-     * @throws IOException if the input loading fails
+     * @throws IOException
+     *             if the input loading fails
      */
     @Test
     void countZerosDuringExecutionTest() throws IOException {
@@ -38,7 +39,8 @@ class ZeroCounterTest {
     /**
      * Test part 2 with the example input
      * 
-     * @throws IOException if the input loading fails
+     * @throws IOException
+     *             if the input loading fails
      */
     @Test
     void countAllZerosDuringExecutionTest() throws IOException {
@@ -53,7 +55,8 @@ class ZeroCounterTest {
     /**
      * Test part 2 with the specific input
      * 
-     * @throws IOException if the input loading fails
+     * @throws IOException
+     *             if the input loading fails
      */
     @ParameterizedTest
     @CsvFileSource(resources = CSV_FILE_NAME, useHeadersInDisplayName = true)

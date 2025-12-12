@@ -1,12 +1,12 @@
 package io.github.stdonnelly.adventofcode.day03.test.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import io.github.stdonnelly.adventofcode.day03.model.BatteryBank;
 import io.github.stdonnelly.adventofcode.day03.service.Max12Calculator;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class Max12CalculatorTest {
     @ParameterizedTest

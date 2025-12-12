@@ -8,8 +8,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.yaml.snakeyaml.DumperOptions;
-import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.DumperOptions.FlowStyle;
+import org.yaml.snakeyaml.Yaml;
 
 import io.github.stdonnelly.adventofcode.day02.model.IdRange;
 

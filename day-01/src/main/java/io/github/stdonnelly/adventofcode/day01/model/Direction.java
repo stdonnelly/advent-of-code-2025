@@ -23,9 +23,11 @@ public enum Direction {
     /**
      * Parse the input letter, L or R, as a direction
      * 
-     * @param directionIndicator 'L' or 'R'
+     * @param directionIndicator
+     *            'L' or 'R'
      * @return The indicated direction. Left for 'L' or Right for 'R'
-     * @throws IllegalArgumentException If the input is not 'L' or 'R'
+     * @throws IllegalArgumentException
+     *             If the input is not 'L' or 'R'
      */
     public static Direction parse(char directionIndicator) throws IllegalArgumentException {
         return switch (directionIndicator) {

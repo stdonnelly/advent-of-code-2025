@@ -6,8 +6,10 @@ import java.util.regex.Pattern;
 /**
  * An inclusive range of IDs from the question
  * 
- * @param start The start of the range (inclusive)
- * @param end   The end of the range (inclusive)
+ * @param start
+ *            The start of the range (inclusive)
+ * @param end
+ *            The end of the range (inclusive)
  */
 public record IdRange(long start, long end) {
     // A regex to match the range
@@ -16,10 +18,12 @@ public record IdRange(long start, long end) {
     /**
      * Parse an input object
      * 
-     * @param input The input string to parse
+     * @param input
+     *            The input string to parse
      * 
      * @return The input after parsing
-     * @throws IllegalArgumentException If the input is not parsable
+     * @throws IllegalArgumentException
+     *             If the input is not parsable
      */
     public static IdRange parse(String input) throws IllegalArgumentException {
         final Matcher matcher = PARSER_PATTERN.matcher(input);
@@ -41,7 +45,8 @@ public record IdRange(long start, long end) {
     /**
      * Check if the number is included in this range
      * 
-     * @param other The number to check
+     * @param other
+     *            The number to check
      * @return `true` if the number is in this range (inclusive). `false` otherwise.
      */
     public boolean contains(long other) {
