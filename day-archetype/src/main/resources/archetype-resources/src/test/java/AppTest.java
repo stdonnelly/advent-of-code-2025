@@ -1,4 +1,4 @@
-package ${package};
+package ${package}.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import ${package}.App;
 import ${package}.loader.InputLoader;
 import ${package}.model.${inputDatum};
 

@@ -40,7 +40,7 @@ under the License.
       <defaultValue>io.github.stdonnelly.adventofcode.day${dayNumber}</defaultValue>
     </requiredProperty>
     <requiredProperty key="version">
-      <defaultValue>0.3.0</defaultValue>
+      <defaultValue>0.4.0</defaultValue>
     </requiredProperty>
   </requiredProperties>
   <fileSets>
@@ -50,15 +50,24 @@ under the License.
         <exclude>module-info.java</exclude>
       </excludes>
     </fileSet>
-    <!-- module-info is separated because it should not be moved to a different package -->
+    <fileSet filtered="true" packaged="true">
+      <directory>src/test/java</directory>
+      <excludes>
+        <exclude>module-info.java</exclude>
+      </excludes>
+    </fileSet>
+    <!-- module-info's are separated because they should not be moved to a different package -->
     <fileSet filtered="true">
       <directory>src/main/java</directory>
       <includes>
         <include>module-info.java</include>
       </includes>
     </fileSet>
-    <fileSet filtered="true" packaged="true">
+    <fileSet filtered="true">
       <directory>src/test/java</directory>
+      <includes>
+        <include>module-info.java</include>
+      </includes>
     </fileSet>
     <fileSet>
       <directory>src/main/resources</directory>
