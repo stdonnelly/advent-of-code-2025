@@ -1,0 +1,49 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Day 1",
+            "request": "launch",
+            "mainClass": "io.github.stdonnelly.adventofcode.day01/io.github.stdonnelly.adventofcode.day01.Day1",
+            "projectName": "day-01"
+        },
+        {
+            "type": "java",
+            "name": "Day 2",
+            "request": "launch",
+            "mainClass": "io.github.stdonnelly.adventofcode.day02/io.github.stdonnelly.adventofcode.day02.App",
+            "projectName": "day-02"
+        },
+        {
+            "type": "java",
+            "name": "Day 3",
+            "request": "launch",
+            "mainClass": "io.github.stdonnelly.adventofcode.day03/io.github.stdonnelly.adventofcode.day03.App",
+            "projectName": "day-03"
+        },
+        {
+            "type": "java",
+            "name": "Day 4",
+            "request": "launch",
+            "mainClass": "io.github.stdonnelly.adventofcode.day04/io.github.stdonnelly.adventofcode.day04.App",
+            "projectName": "day-04"
+        },
+        {
+            "type": "java",
+            "name": "Debug remote Java application",
+            "request": "attach",
+            "hostName": "localhost",
+            "port": 8000
+        }
+    ]
+}

@@ -5,5 +5,9 @@
         "snakeyaml",
         "stdonnelly"
     ],
-    "java.format.settings.url": "eclipse-formatter.xml"
+    "java.format.settings.url": "eclipse-formatter.xml",
+    "java.debug.settings.exceptionBreakpoint.exceptionTypes": [
+        "java.lang.reflect.InvocationTargetException",
+        "java.lang.IndexOutOfBoundsException"
+    ]
 }
