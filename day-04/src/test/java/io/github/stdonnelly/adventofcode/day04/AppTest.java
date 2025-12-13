@@ -20,7 +20,7 @@ class AppTest {
      */
     @Test
     void part1Test() throws IOException {
-        final int EXPECTED = -1;
+        final int EXPECTED = 13;
         final InputLoader inputLoader = new InputLoader(EXAMPLE_FILE_NAME);
         final FloorMap input = inputLoader.load();
         assertEquals(EXPECTED, App.part1(input));

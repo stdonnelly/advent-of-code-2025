@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import io.github.stdonnelly.adventofcode.day04.loader.InputLoader;
 import io.github.stdonnelly.adventofcode.day04.model.FloorMap;
+import io.github.stdonnelly.adventofcode.day04.service.FloorService;
 
 /**
  * Day 04 solver
@@ -29,7 +30,9 @@ public class App {
     }
 
     static int part1(final FloorMap input) {
-        return -1;
+        final FloorService floorService = new FloorService();
+
+        return floorService.countMoveablePaper(input);
     }
 
     static int part2(final FloorMap input) {
