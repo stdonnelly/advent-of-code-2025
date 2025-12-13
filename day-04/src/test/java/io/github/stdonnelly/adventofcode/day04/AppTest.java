@@ -34,7 +34,7 @@ class AppTest {
      */
     @Test
     void part2Test() throws IOException {
-        final int EXPECTED = -1;
+        final int EXPECTED = 43;
         final InputLoader inputLoader = new InputLoader(EXAMPLE_FILE_NAME);
         final FloorMap input = inputLoader.load();
         assertEquals(EXPECTED, App.part2(input));
