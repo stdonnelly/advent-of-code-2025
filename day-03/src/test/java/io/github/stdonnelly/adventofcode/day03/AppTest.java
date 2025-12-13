@@ -1,11 +1,10 @@
-package io.github.stdonnelly.adventofcode.day03.test;
+package io.github.stdonnelly.adventofcode.day03;
 
 import java.io.IOException;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import io.github.stdonnelly.adventofcode.day03.App;
 import io.github.stdonnelly.adventofcode.day03.loader.InputLoader;
 import io.github.stdonnelly.adventofcode.day03.model.BatteryBank;
 

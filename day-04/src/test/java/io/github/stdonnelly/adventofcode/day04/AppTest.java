@@ -1,45 +1,42 @@
-package ${package}.test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+package io.github.stdonnelly.adventofcode.day04;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import ${package}.App;
-import ${package}.loader.InputLoader;
-import ${package}.model.${inputDatum};
+import io.github.stdonnelly.adventofcode.day04.loader.InputLoader;
+import io.github.stdonnelly.adventofcode.day04.model.FloorMap;
 
-class AppTest
-{
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class AppTest {
     private static final String EXAMPLE_FILE_NAME = "example_input.txt";
 
     /**
      * Test part 1 with the example input
      * 
-     * @throws IOException if the input loading fails
+     * @throws IOException
+     *             if the input loading fails
      */
     @Test
-    void part1Test() throws IOException
-    {
+    void part1Test() throws IOException {
         final int EXPECTED = -1;
         final InputLoader inputLoader = new InputLoader(EXAMPLE_FILE_NAME);
-        final List<${inputDatum}> input = inputLoader.load();
+        final FloorMap input = inputLoader.load();
         assertEquals(EXPECTED, App.part1(input));
     }
 
     /**
      * Test part 2 with the example input
      * 
-     * @throws IOException if the input loading fails
+     * @throws IOException
+     *             if the input loading fails
      */
     @Test
-    void part2Test() throws IOException
-    {
+    void part2Test() throws IOException {
         final int EXPECTED = -1;
         final InputLoader inputLoader = new InputLoader(EXAMPLE_FILE_NAME);
-        final List<${inputDatum}> input = inputLoader.load();
+        final FloorMap input = inputLoader.load();
         assertEquals(EXPECTED, App.part2(input));
     }
 }

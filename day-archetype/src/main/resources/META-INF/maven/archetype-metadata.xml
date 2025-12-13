@@ -50,24 +50,15 @@ under the License.
         <exclude>module-info.java</exclude>
       </excludes>
     </fileSet>
-    <fileSet filtered="true" packaged="true">
-      <directory>src/test/java</directory>
-      <excludes>
-        <exclude>module-info.java</exclude>
-      </excludes>
-    </fileSet>
-    <!-- module-info's are separated because they should not be moved to a different package -->
+    <!-- module-info is separated because it should not be moved to a different package -->
     <fileSet filtered="true">
       <directory>src/main/java</directory>
       <includes>
         <include>module-info.java</include>
       </includes>
     </fileSet>
-    <fileSet filtered="true">
+    <fileSet filtered="true" packaged="true">
       <directory>src/test/java</directory>
-      <includes>
-        <include>module-info.java</include>
-      </includes>
     </fileSet>
     <fileSet>
       <directory>src/main/resources</directory>
