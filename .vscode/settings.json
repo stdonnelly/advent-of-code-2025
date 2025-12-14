@@ -5,7 +5,9 @@
         "snakeyaml",
         "stdonnelly"
     ],
-    "java.format.settings.url": "eclipse-formatter.xml",
+    // Disable the Red Hat formatter in favor of the standalone Google formatter extension
+    "java.format.enabled": false,
+    "java.format.settings.google.version": "1.33.0",
     "java.debug.settings.exceptionBreakpoint.exceptionTypes": [
         "java.lang.reflect.InvocationTargetException",
         "java.lang.IndexOutOfBoundsException"

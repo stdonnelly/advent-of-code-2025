@@ -14,8 +14,7 @@
     <module>day-04</module>
   </modules>
   <properties>
-    <maven.compiler.target>25</maven.compiler.target>
-    <maven.compiler.source>25</maven.compiler.source>
+    <maven.compiler.release>25</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <eclipse.formatter.file>${project.basedir}/eclipse-formatter.xml</eclipse.formatter.file>
   </properties>
@@ -72,20 +71,23 @@
                 <include>src/main/java/**/*.java</include>
                 <include>src/test/java/**/*.java</include>
               </includes>
-              <!-- Use the eclipse formatter, which should be the same as the Java VSCode plugin -->
-              <eclipse>
-                <file>${eclipse.formatter.file}</file>
-              </eclipse>
+
+              <!-- Format using the Google style guide -->
+              <googleJavaFormat>
+                <version>1.33.0</version>
+                <reflowLongStrings>true</reflowLongStrings>
+                <formatJavadoc>true</formatJavadoc>
+              </googleJavaFormat>
+
               <!-- Fix imports -->
-              <importOrder>
-                <order>java|javax,,io.github.stdonnelly.adventofcode,\#</order>
-              </importOrder>
               <removeUnusedImports/>
               <forbidWildcardImports/>
               <forbidModuleImports/>
             </java>
             <pom>
-              <includes>pom.xml</includes>
+              <includes>
+                <include>pom.xml</include>
+              </includes>
               <sortPom/>
             </pom>
           </configuration>
