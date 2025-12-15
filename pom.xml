@@ -72,14 +72,12 @@
                 <include>src/main/java/**/*.java</include>
                 <include>src/test/java/**/*.java</include>
               </includes>
-
               <!-- Format using the Google style guide -->
               <googleJavaFormat>
                 <version>1.33.0</version>
                 <reflowLongStrings>true</reflowLongStrings>
                 <formatJavadoc>true</formatJavadoc>
               </googleJavaFormat>
-
               <!-- Fix imports -->
               <removeUnusedImports/>
               <forbidWildcardImports/>
