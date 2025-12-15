@@ -1,20 +1,18 @@
 package io.github.stdonnelly.adventofcode.day05;
 
-import io.github.stdonnelly.adventofcode.common.loader.InputLoader;
-import io.github.stdonnelly.adventofcode.day05.loader.FreshRangeLoader;
-import io.github.stdonnelly.adventofcode.day05.model.FreshRange;
+import io.github.stdonnelly.adventofcode.day05.loader.TaskInputLoader;
+import io.github.stdonnelly.adventofcode.day05.model.TaskInput;
 import java.io.IOException;
-import java.util.List;
 
 /** Day 05 solver */
 public class App {
   private static final String IN_FILE_NAME = "input.txt";
 
   public static void main(String[] args) {
-    final InputLoader<FreshRange> inputLoader = new FreshRangeLoader(IN_FILE_NAME);
+    final TaskInputLoader inputLoader = new TaskInputLoader(IN_FILE_NAME);
 
     try {
-      final List<FreshRange> input = inputLoader.load();
+      final TaskInput input = inputLoader.load();
 
       final var part1Answer = part1(input);
       System.out.println("Part 1: " + part1Answer);
@@ -26,11 +24,11 @@ public class App {
     }
   }
 
-  static int part1(final List<FreshRange> input) {
+  static int part1(final TaskInput input) {
     return -1;
   }
 
-  static int part2(final List<FreshRange> input) {
+  static int part2(final TaskInput input) {
     return -1;
   }
 }
