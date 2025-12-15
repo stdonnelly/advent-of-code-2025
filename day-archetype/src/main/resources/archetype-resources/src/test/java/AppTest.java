@@ -7,7 +7,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import ${package}.loader.InputLoader;
+import io.github.stdonnelly.adventofcode.common.loader.InputLoader;
+import ${package}.loader.${inputDatum}Loader;
 import ${package}.model.${inputDatum};
 
 class AppTest
@@ -23,7 +24,7 @@ class AppTest
     void part1Test() throws IOException
     {
         final int EXPECTED = -1;
-        final InputLoader inputLoader = new InputLoader(EXAMPLE_FILE_NAME);
+        final InputLoader<${inputDatum}> inputLoader = new ${inputDatum}Loader(EXAMPLE_FILE_NAME);
         final List<${inputDatum}> input = inputLoader.load();
         assertEquals(EXPECTED, App.part1(input));
     }
@@ -37,7 +38,7 @@ class AppTest
     void part2Test() throws IOException
     {
         final int EXPECTED = -1;
-        final InputLoader inputLoader = new InputLoader(EXAMPLE_FILE_NAME);
+        final InputLoader<${inputDatum}> inputLoader = new ${inputDatum}Loader(EXAMPLE_FILE_NAME);
         final List<${inputDatum}> input = inputLoader.load();
         assertEquals(EXPECTED, App.part2(input));
     }

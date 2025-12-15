@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.github.stdonnelly.adventofcode</groupId>
   <artifactId>advent-of-code-2025</artifactId>
-  <version>0.4.0</version>
+  <version>0.5.0</version>
   <packaging>pom</packaging>
   <name>advent-of-code-2025</name>
   <modules>
@@ -13,6 +13,7 @@
     <module>day-03</module>
     <module>day-04</module>
     <module>day-05</module>
+    <module>aoc-common</module>
   </modules>
   <properties>
     <maven.compiler.release>25</maven.compiler.release>

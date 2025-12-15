@@ -1,13 +1,13 @@
 package io.github.stdonnelly.adventofcode.day02.service;
 
-import io.github.stdonnelly.adventofcode.day02.model.IdRange;
+import io.github.stdonnelly.adventofcode.common.model.InclusiveRange;
 import java.util.Comparator;
 import java.util.Objects;
 import java.util.Spliterator;
 import java.util.Spliterators.AbstractLongSpliterator;
 import java.util.function.LongConsumer;
 
-/// Iterator over invalid IDs in a given [IdRange]
+/// Iterator over invalid IDs in a given [InclusiveRange]
 ///
 /// "Invalid" is defined in <a href="https://adventofcode.com/2025/day/2">Advent
 /// of code 2025 Day 2</a>
@@ -43,8 +43,8 @@ public class InvalidIdSpliterator extends AbstractLongSpliterator {
 
   /// Construct a new instance
   ///
-  /// @param range the [IdRange] to iterate over
-  public InvalidIdSpliterator(IdRange range) {
+  /// @param range the [InclusiveRange] to iterate over
+  public InvalidIdSpliterator(InclusiveRange range) {
     super(
         Long.MAX_VALUE,
         Spliterator.ORDERED

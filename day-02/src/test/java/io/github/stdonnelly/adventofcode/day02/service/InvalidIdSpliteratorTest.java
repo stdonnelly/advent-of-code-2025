@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import io.github.stdonnelly.adventofcode.day02.model.IdRange;
+import io.github.stdonnelly.adventofcode.common.model.InclusiveRange;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,7 +15,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 class InvalidIdSpliteratorTest {
   // An iterator for the tests where range doesn't matter
   private final InvalidIdSpliterator invalidIdSpliterator120 =
-      new InvalidIdSpliterator(new IdRange(1, 20));
+      new InvalidIdSpliterator(new InclusiveRange(1, 20));
 
   @ParameterizedTest
   @CsvSource(
@@ -33,7 +33,7 @@ class InvalidIdSpliteratorTest {
           """)
   void invalidIdSpliterationTest(String rangeStr, String invalidIdsStr) {
     final InvalidIdSpliterator invalidIdSpliterator =
-        new InvalidIdSpliterator(IdRange.parse(rangeStr.trim()));
+        new InvalidIdSpliterator(InclusiveRange.parse(rangeStr.trim()));
 
     List<Long> expectedInvalidIds;
     if (invalidIdsStr == null || invalidIdsStr.isBlank()) {

@@ -1,3 +1,5 @@
 module ${package} {
-    exports ${package};
+  exports ${package};
+
+  requires io.github.stdonnelly.adventofcode.common;
 }

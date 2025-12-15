@@ -3,8 +3,8 @@ package io.github.stdonnelly.adventofcode.day02;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+import io.github.stdonnelly.adventofcode.common.model.InclusiveRange;
 import io.github.stdonnelly.adventofcode.day02.loader.InputLoader;
-import io.github.stdonnelly.adventofcode.day02.model.IdRange;
 import java.io.IOException;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -23,7 +23,7 @@ class AppTest {
   void part1Test() throws IOException {
     final long EXPECTED = 1227775554;
     final InputLoader inputLoader = new InputLoader(EXAMPLE_FILE_NAME);
-    final List<IdRange> input = inputLoader.load();
+    final List<InclusiveRange> input = inputLoader.load();
     assertEquals(EXPECTED, App.part1(input));
   }
 
@@ -36,7 +36,7 @@ class AppTest {
   void part2Test() throws IOException {
     final long EXPECTED = 4174379265L;
     final InputLoader inputLoader = new InputLoader(EXAMPLE_FILE_NAME);
-    final List<IdRange> input = inputLoader.load();
+    final List<InclusiveRange> input = inputLoader.load();
     assertEquals(EXPECTED, App.part2(input));
   }
 
@@ -53,14 +53,14 @@ class AppTest {
   @ValueSource(strings = {EXAMPLE_FILE_NAME, "input.txt"})
   void noOverlapsTest(String inputFileName) throws IOException {
     final InputLoader inputLoader = new InputLoader(inputFileName);
-    final List<IdRange> input = inputLoader.load();
+    final List<InclusiveRange> input = inputLoader.load();
 
     // Loop over all input elements to check if start or end are in another range
     // We're using a traditional for loop because I want to exclude this when
     // checking (a range always overlaps with itself).
     final int inputSize = input.size();
     for (int i = 0; i < inputSize; i++) {
-      final IdRange idRange = input.get(i);
+      final InclusiveRange idRange = input.get(i);
 
       // Yay, O(n^2)
       for (int j = 0; j < inputSize; j++) {
@@ -69,7 +69,7 @@ class AppTest {
           continue;
         }
 
-        final IdRange idRange2 = input.get(j);
+        final InclusiveRange idRange2 = input.get(j);
 
         assertFalse(
             idRange2.contains(idRange.start()), () -> idRange + " overlaps with " + idRange2);

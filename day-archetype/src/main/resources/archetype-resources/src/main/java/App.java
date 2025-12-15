@@ -2,8 +2,8 @@ package ${package};
 
 import java.io.IOException;
 import java.util.List;
-
-import ${package}.loader.InputLoader;
+import io.github.stdonnelly.adventofcode.common.loader.InputLoader;
+import ${package}.loader.${inputDatum}Loader;
 import ${package}.model.${inputDatum};
 
 /**
@@ -14,7 +14,7 @@ public class App {
     private static final String IN_FILE_NAME = "input.txt";
 
     public static void main(String[] args) {
-        final InputLoader inputLoader = new InputLoader(IN_FILE_NAME);
+        final InputLoader<${inputDatum}> inputLoader = new ${inputDatum}Loader(IN_FILE_NAME);
 
         try {
             final List<${inputDatum}> input = inputLoader.load();
