@@ -1,6 +1,6 @@
 package io.github.stdonnelly.adventofcode.day02.loader;
 
-import io.github.stdonnelly.adventofcode.day02.model.IdRange;
+import io.github.stdonnelly.adventofcode.common.model.InclusiveRange;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,13 +23,13 @@ public class InputLoader {
 
   /**
    * Takes the input from the resource named in {@link inFileName} and parses it into a list of
-   * {@link IdRange}
+   * {@link InclusiveRange}
    *
    * @return A List of IdRange from the file
    * @throws IOException if there is a problem loading the input.txt file, or if there is a problem
    *     reading the file
    */
-  public List<IdRange> load() throws IOException {
+  public List<InclusiveRange> load() throws IOException {
     try (InputStream is = this.getClass().getClassLoader().getResourceAsStream(inFileName);
         Scanner scanner = new Scanner(is, StandardCharsets.UTF_8)) {
       if (is == null) {
@@ -38,7 +38,7 @@ public class InputLoader {
 
       scanner.useDelimiter(",");
 
-      return scanner.tokens().map(String::trim).map(IdRange::parse).toList();
+      return scanner.tokens().map(String::trim).map(InclusiveRange::parse).toList();
     }
   }
 }

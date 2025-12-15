@@ -1,0 +1,44 @@
+package io.github.stdonnelly.adventofcode.common.loader;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+
+/// Loads the input file
+///
+/// @param <T> The type of input object to load
+public abstract class InputLoader<T> {
+  protected final String inFileName;
+
+  /// Create an input file loader to load from the specified file
+  ///
+  /// @param inFileName The file to load from
+  protected InputLoader(final String inFileName) {
+    this.inFileName = inFileName;
+  }
+
+  /// Takes the input from the resource named in the constructor and parse each line as the input
+  // type `T`
+  ///
+  /// @return A list containing each line of input parsed as `T`
+  /// @throws IOException if there is a problem loading the input.txt file, or if there is a problem
+  ///     reading the file
+  public List<T> load() throws IOException {
+    try (InputStream is = this.getClass().getClassLoader().getResourceAsStream(inFileName);
+        InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
+        BufferedReader reader = new BufferedReader(isr)) {
+      if (is == null) {
+        throw new FileNotFoundException(inFileName + " not found");
+      }
+
+      return reader.lines().map(this::parseOne).toList();
+    }
+  }
+
+  /// Parse one object from the input
+  public abstract T parseOne(String input);
+}

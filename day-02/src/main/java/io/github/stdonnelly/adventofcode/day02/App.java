@@ -1,7 +1,7 @@
 package io.github.stdonnelly.adventofcode.day02;
 
+import io.github.stdonnelly.adventofcode.common.model.InclusiveRange;
 import io.github.stdonnelly.adventofcode.day02.loader.InputLoader;
-import io.github.stdonnelly.adventofcode.day02.model.IdRange;
 import io.github.stdonnelly.adventofcode.day02.service.InvalidIdSpliterator;
 import io.github.stdonnelly.adventofcode.day02.service.InvalidIdSpliteratorPart2;
 import io.github.stdonnelly.adventofcode.day02.writer.ResultWriter;
@@ -31,7 +31,7 @@ public class App {
     final InputLoader inputLoader = new InputLoader(IN_FILE_NAME);
 
     try {
-      final List<IdRange> input = inputLoader.load();
+      final List<InclusiveRange> input = inputLoader.load();
 
       final var part1Answer = part1(input);
       System.out.println("Part 1: " + part1Answer);
@@ -43,7 +43,7 @@ public class App {
     }
   }
 
-  static long part1(final List<IdRange> input) {
+  static long part1(final List<InclusiveRange> input) {
     final List<Long> invalidIds = new ArrayList<>();
 
     final long invalidIdsSum =
@@ -64,7 +64,7 @@ public class App {
     return invalidIdsSum;
   }
 
-  static long part2(final List<IdRange> input) {
+  static long part2(final List<InclusiveRange> input) {
     final List<Long> invalidIds = new ArrayList<>();
 
     final long invalidIdsSum =

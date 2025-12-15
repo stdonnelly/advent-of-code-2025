@@ -1,6 +1,6 @@
 package io.github.stdonnelly.adventofcode.day02.writer;
 
-import io.github.stdonnelly.adventofcode.day02.model.IdRange;
+import io.github.stdonnelly.adventofcode.common.model.InclusiveRange;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -41,10 +41,10 @@ public class ResultWriter implements AutoCloseable {
   ///
   /// @param ranges     The ranges to output
   /// @param invalidIds The List of invalid IDs to output
-  public void write(List<IdRange> ranges, List<Long> invalidIds) {
+  public void write(List<InclusiveRange> ranges, List<Long> invalidIds) {
     // LinkedHashMap to preserve order
     LinkedHashMap<String, Object> map = new LinkedHashMap<>();
-    map.put("ranges", ranges.stream().map(IdRange::toString).toList());
+    map.put("ranges", ranges.stream().map(InclusiveRange::toString).toList());
     map.put("invalid_ids", invalidIds);
 
     // Dump as a singleton list
