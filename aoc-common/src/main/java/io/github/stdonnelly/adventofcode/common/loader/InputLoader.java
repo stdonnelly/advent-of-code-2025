@@ -22,7 +22,7 @@ public abstract class InputLoader<T> {
   }
 
   /// Takes the input from the resource named in the constructor and parse each line as the input
-  // type `T`
+  /// type `T`
   ///
   /// @return A list containing each line of input parsed as `T`
   /// @throws IOException if there is a problem loading the input.txt file, or if there is a problem

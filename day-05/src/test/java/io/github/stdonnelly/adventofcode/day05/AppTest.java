@@ -2,7 +2,8 @@ package io.github.stdonnelly.adventofcode.day05;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import io.github.stdonnelly.adventofcode.day05.loader.InputLoader;
+import io.github.stdonnelly.adventofcode.common.loader.InputLoader;
+import io.github.stdonnelly.adventofcode.day05.loader.FreshRangeLoader;
 import io.github.stdonnelly.adventofcode.day05.model.FreshRange;
 import java.io.IOException;
 import java.util.List;
@@ -19,7 +20,7 @@ class AppTest {
   @Test
   void part1Test() throws IOException {
     final int EXPECTED = -1;
-    final InputLoader inputLoader = new InputLoader(EXAMPLE_FILE_NAME);
+    final InputLoader<FreshRange> inputLoader = new FreshRangeLoader(EXAMPLE_FILE_NAME);
     final List<FreshRange> input = inputLoader.load();
     assertEquals(EXPECTED, App.part1(input));
   }
@@ -32,7 +33,7 @@ class AppTest {
   @Test
   void part2Test() throws IOException {
     final int EXPECTED = -1;
-    final InputLoader inputLoader = new InputLoader(EXAMPLE_FILE_NAME);
+    final InputLoader<FreshRange> inputLoader = new FreshRangeLoader(EXAMPLE_FILE_NAME);
     final List<FreshRange> input = inputLoader.load();
     assertEquals(EXPECTED, App.part2(input));
   }

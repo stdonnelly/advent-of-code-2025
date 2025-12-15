@@ -1,6 +1,7 @@
 package io.github.stdonnelly.adventofcode.day05;
 
-import io.github.stdonnelly.adventofcode.day05.loader.InputLoader;
+import io.github.stdonnelly.adventofcode.common.loader.InputLoader;
+import io.github.stdonnelly.adventofcode.day05.loader.FreshRangeLoader;
 import io.github.stdonnelly.adventofcode.day05.model.FreshRange;
 import java.io.IOException;
 import java.util.List;
@@ -10,7 +11,7 @@ public class App {
   private static final String IN_FILE_NAME = "input.txt";
 
   public static void main(String[] args) {
-    final InputLoader inputLoader = new InputLoader(IN_FILE_NAME);
+    final InputLoader<FreshRange> inputLoader = new FreshRangeLoader(IN_FILE_NAME);
 
     try {
       final List<FreshRange> input = inputLoader.load();
