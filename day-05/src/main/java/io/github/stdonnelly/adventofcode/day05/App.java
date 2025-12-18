@@ -32,6 +32,8 @@ public class App {
   }
 
   static long part2(final TaskInput input) {
-    return -1;
+    FreshIngredientCounter freshIngredientCounter =
+        new FreshIngredientCounter(input.freshIngredientRanges());
+    return freshIngredientCounter.countAllFresh();
   }
 }

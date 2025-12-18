@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import io.github.stdonnelly.adventofcode.day05.loader.TaskInputLoader;
 import io.github.stdonnelly.adventofcode.day05.model.TaskInput;
 import java.io.IOException;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 class AppTest {
@@ -28,9 +29,10 @@ class AppTest {
    *
    * @throws IOException if the input loading fails
    */
+  @Disabled("TODO")
   @Test
   void part2Test() throws IOException {
-    final long EXPECTED = -1;
+    final long EXPECTED = 14;
     final TaskInputLoader inputLoader = new TaskInputLoader(EXAMPLE_FILE_NAME);
     final TaskInput input = inputLoader.load();
     assertEquals(EXPECTED, App.part2(input));

@@ -20,8 +20,13 @@ public class FreshIngredientCounter {
     this.freshIngredientRanges = Set.copyOf(freshIngredientRanges);
   }
 
-  /// Give the count of all of the ingredients that are considered fresh by
-  // [isFresh][#isFresh(long)]
+  /// Counts *all* IDs that are included in at least one of the ranges in `freshIngredientRanges`
+  public long countAllFresh() {
+    throw new UnsupportedOperationException("TODO");
+  }
+
+  /// Give the count of all provided ingredients that are considered fresh by
+  /// [isFresh][#isFresh(long)]
   ///
   /// @param allIngredients The ingredients to check for freshness
   public long freshCount(Collection<Long> allIngredients) {

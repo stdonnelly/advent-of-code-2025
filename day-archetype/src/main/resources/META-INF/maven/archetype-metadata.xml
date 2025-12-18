@@ -40,7 +40,7 @@ under the License.
       <defaultValue>io.github.stdonnelly.adventofcode.day${dayNumber}</defaultValue>
     </requiredProperty>
     <requiredProperty key="version">
-      <defaultValue>0.5.0</defaultValue>
+      <defaultValue>0.5.1</defaultValue>
     </requiredProperty>
   </requiredProperties>
   <fileSets>

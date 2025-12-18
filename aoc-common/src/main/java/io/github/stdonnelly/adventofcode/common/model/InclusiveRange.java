@@ -1,5 +1,6 @@
 package io.github.stdonnelly.adventofcode.common.model;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -7,7 +8,7 @@ import java.util.regex.Pattern;
 ///
 /// @param start The start of the range (inclusive)
 /// @param end The end of the range (inclusive)
-public record InclusiveRange(long start, long end) {
+public record InclusiveRange(long start, long end) implements Comparable<InclusiveRange> {
   // A regex to match the range
   private static final Pattern PARSER_PATTERN = Pattern.compile("^(\\d+)-(\\d+)$");
 
@@ -44,5 +45,30 @@ public record InclusiveRange(long start, long end) {
   @Override
   public String toString() {
     return String.format("%d-%d", start, end);
+  }
+
+  /// Compare by `start`, then by `end`
+  ///
+  /// @since 0.5.1
+  @Override
+  public int compareTo(InclusiveRange other) {
+    Objects.requireNonNull("Cannot compare InclusiveRange[" + this.toString() + "] to null");
+
+    // Try comparing by start
+    if (this.start() < other.start()) {
+      return -1;
+    } else if (this.start() > other.start()) {
+      return 1;
+    } else {
+      // If the start is equal, try comparing by end
+      if (this.end() < other.end()) {
+        return -1;
+      } else if (this.end() > other.end()) {
+        return 1;
+      } else {
+        // If the end is equal, this is other
+        return 0;
+      }
+    }
   }
 }
