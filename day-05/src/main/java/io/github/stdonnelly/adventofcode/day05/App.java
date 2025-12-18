@@ -2,6 +2,7 @@ package io.github.stdonnelly.adventofcode.day05;
 
 import io.github.stdonnelly.adventofcode.day05.loader.TaskInputLoader;
 import io.github.stdonnelly.adventofcode.day05.model.TaskInput;
+import io.github.stdonnelly.adventofcode.day05.service.FreshIngredientCounter;
 import java.io.IOException;
 
 /** Day 05 solver */
@@ -24,11 +25,13 @@ public class App {
     }
   }
 
-  static int part1(final TaskInput input) {
-    return -1;
+  static long part1(final TaskInput input) {
+    FreshIngredientCounter freshIngredientCounter =
+        new FreshIngredientCounter(input.freshIngredientRanges());
+    return freshIngredientCounter.freshCount(input.availableIngredients());
   }
 
-  static int part2(final TaskInput input) {
+  static long part2(final TaskInput input) {
     return -1;
   }
 }

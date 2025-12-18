@@ -17,7 +17,7 @@ class AppTest {
    */
   @Test
   void part1Test() throws IOException {
-    final int EXPECTED = -1;
+    final long EXPECTED = 3;
     final TaskInputLoader inputLoader = new TaskInputLoader(EXAMPLE_FILE_NAME);
     final TaskInput input = inputLoader.load();
     assertEquals(EXPECTED, App.part1(input));
@@ -30,7 +30,7 @@ class AppTest {
    */
   @Test
   void part2Test() throws IOException {
-    final int EXPECTED = -1;
+    final long EXPECTED = -1;
     final TaskInputLoader inputLoader = new TaskInputLoader(EXAMPLE_FILE_NAME);
     final TaskInput input = inputLoader.load();
     assertEquals(EXPECTED, App.part2(input));
