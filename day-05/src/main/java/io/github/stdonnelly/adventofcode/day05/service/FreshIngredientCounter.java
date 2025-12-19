@@ -1,15 +1,16 @@
 package io.github.stdonnelly.adventofcode.day05.service;
 
 import io.github.stdonnelly.adventofcode.common.model.InclusiveRange;
+import io.github.stdonnelly.adventofcode.common.service.InclusiveRangeMergingGatherer;
 import java.util.Collection;
-import java.util.Set;
+import java.util.List;
 
 /// A service class that counts the number of fresh ingredients contained in a list of ingredient
 /// IDs
 ///
 /// An ingredient is fresh if it is contained in any of the `freshIngredientRanges`
 public class FreshIngredientCounter {
-  private final Set<InclusiveRange> freshIngredientRanges;
+  private final List<InclusiveRange> freshIngredientRanges;
 
   /// Construct a new instance
   ///
@@ -17,12 +18,22 @@ public class FreshIngredientCounter {
   /// This constructor copies the collection unless it is an immutable [Set], so this class will not
   /// modify this collection or accept any modifications after this class is constructed.
   public FreshIngredientCounter(final Collection<InclusiveRange> freshIngredientRanges) {
-    this.freshIngredientRanges = Set.copyOf(freshIngredientRanges);
+    this.freshIngredientRanges =
+        freshIngredientRanges.stream()
+            // For #countAllFresh(), sort and gather the ranges so there are no overlaps
+            .sorted()
+            .gather(new InclusiveRangeMergingGatherer())
+            .toList();
   }
 
   /// Counts *all* IDs that are included in at least one of the ranges in `freshIngredientRanges`
   public long countAllFresh() {
-    throw new UnsupportedOperationException("TODO");
+    return freshIngredientRanges.stream()
+        // Get the count of items in each range.
+        // This is the difference +1 because the range is inclusive
+        .mapToLong(
+            freshIngredientRange -> freshIngredientRange.end() - freshIngredientRange.start() + 1)
+        .sum();
   }
 
   /// Give the count of all provided ingredients that are considered fresh by
