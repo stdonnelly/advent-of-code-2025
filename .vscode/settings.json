@@ -11,5 +11,9 @@
     "java.debug.settings.exceptionBreakpoint.exceptionTypes": [
         "java.lang.reflect.InvocationTargetException",
         "java.lang.IndexOutOfBoundsException"
-    ]
+    ],
+    // Comply with Google Java Format
+    "[java]": {
+        "editor.tabSize": 2
+    },
 }

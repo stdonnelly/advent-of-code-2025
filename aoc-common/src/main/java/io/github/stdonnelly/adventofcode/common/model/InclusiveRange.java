@@ -16,7 +16,8 @@ public record InclusiveRange(long start, long end) implements Comparable<Inclusi
   ///
   /// @param input The input string to parse
   /// @return The input after parsing
-  /// @throws IllegalArgumentException If the input is not parsable
+  /// @throws IllegalArgumentException If the input is not parsable, or if the start is after the
+  /// end.
   public static InclusiveRange parse(String input) throws IllegalArgumentException {
     final Matcher matcher = PARSER_PATTERN.matcher(input);
 
@@ -31,6 +32,10 @@ public record InclusiveRange(long start, long end) implements Comparable<Inclusi
     final long start = Long.parseLong(matcher.group(1));
     final long end = Long.parseLong(matcher.group(2));
 
+    if (start > end) {
+      throw new IllegalArgumentException("start must be <= end");
+    }
+
     return new InclusiveRange(start, end);
   }
 
@@ -40,6 +45,39 @@ public record InclusiveRange(long start, long end) implements Comparable<Inclusi
   /// @return `true` if the number is in this range (inclusive). `false` otherwise.
   public boolean contains(long other) {
     return this.start <= other && other <= this.end;
+  }
+
+  /// Merges `this` with `other` if there is an overlap or adjacency.
+  ///
+  /// @param other The inclusive range to try to merge with
+  /// @return The [InclusiveRange] that covers the union between `this` and `other`, if possible.
+  ///         `null` otherwise.
+  /// @since 0.5.1
+  public InclusiveRange mergeWith(InclusiveRange other) {
+    // Null check
+    if (other == null) {
+      return null;
+    }
+
+    // Find the first and second range
+    InclusiveRange left;
+    InclusiveRange right;
+    if (this.compareTo(other) <= 0) {
+      left = this;
+      right = other;
+    } else {
+      left = other;
+      right = this;
+    }
+
+    // Determine if there is an overlap or adjacency.
+    if (right.start() <= left.end() + 1) {
+      // If there is an overlap or adjacency, return the merged version.
+      // Despite what I assumed originally, right.end not necessarily the maximum.
+      return new InclusiveRange(left.start(), Math.max(left.end(), right.end()));
+    } else {
+      return null;
+    }
   }
 
   @Override

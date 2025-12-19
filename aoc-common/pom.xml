@@ -14,4 +14,12 @@
 
   <name>Advent of Code - common</name>
   <description>Library class to be used by other modules</description>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 </project>
