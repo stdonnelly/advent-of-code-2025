@@ -4,7 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import io.github.stdonnelly.adventofcode.day06.loader.LongTableLoader;
 import io.github.stdonnelly.adventofcode.day06.model.LongTable;
+import io.github.stdonnelly.adventofcode.day06.model.Operation;
 import java.io.IOException;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class AppTest {
@@ -17,10 +19,11 @@ class AppTest {
    */
   @Test
   void part1Test() throws IOException {
-    final int EXPECTED = -1;
+    final long EXPECTED = 4277556L;
     final LongTableLoader inputLoader = new LongTableLoader(EXAMPLE_FILE_NAME);
     final LongTable input = inputLoader.loadAsLongTable();
-    assertEquals(EXPECTED, App.part1(input));
+    final List<Operation> operationList = inputLoader.getOperationList();
+    assertEquals(EXPECTED, App.part1(input, operationList));
   }
 
   /**
@@ -30,9 +33,10 @@ class AppTest {
    */
   @Test
   void part2Test() throws IOException {
-    final int EXPECTED = -1;
+    final long EXPECTED = -1;
     final LongTableLoader inputLoader = new LongTableLoader(EXAMPLE_FILE_NAME);
     final LongTable input = inputLoader.loadAsLongTable();
-    assertEquals(EXPECTED, App.part2(input));
+    final List<Operation> operationList = inputLoader.getOperationList();
+    assertEquals(EXPECTED, App.part2(input, operationList));
   }
 }
