@@ -1,8 +1,11 @@
 package io.github.stdonnelly.adventofcode.day06;
 
+import io.github.stdonnelly.adventofcode.common.loader.InputLoader;
 import io.github.stdonnelly.adventofcode.day06.loader.LongTableLoader;
+import io.github.stdonnelly.adventofcode.day06.loader.part2.MathProblemLoader;
 import io.github.stdonnelly.adventofcode.day06.model.LongTable;
 import io.github.stdonnelly.adventofcode.day06.model.Operation;
+import io.github.stdonnelly.adventofcode.day06.model.part2.MathProblem;
 import io.github.stdonnelly.adventofcode.service.MathService;
 import java.io.IOException;
 import java.util.List;
@@ -13,6 +16,7 @@ public class App {
 
   public static void main(String[] args) {
     final LongTableLoader inputLoader = new LongTableLoader(IN_FILE_NAME);
+    final InputLoader<MathProblem> mathProblemLoader = new MathProblemLoader(IN_FILE_NAME);
 
     try {
       final LongTable input = inputLoader.loadAsLongTable();
@@ -21,7 +25,9 @@ public class App {
       final var part1Answer = part1(input, operationList);
       System.out.println("Part 1: " + part1Answer);
 
-      final var part2Answer = part2(input, operationList);
+      final List<MathProblem> mathProblemList = mathProblemLoader.load();
+
+      final var part2Answer = part2(mathProblemList);
       System.out.println("Part 2: " + part2Answer);
     } catch (IOException e) {
       System.err.println(e);
@@ -33,7 +39,7 @@ public class App {
     return mathService.performAllOperationsAndSum(operationList, input.pivot());
   }
 
-  static long part2(final LongTable input, List<Operation> operationList) {
-    return -1;
+  static long part2(final List<MathProblem> mathProblemList) {
+    return mathProblemList.stream().mapToLong(MathProblem::compute).sum();
   }
 }
