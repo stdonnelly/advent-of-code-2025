@@ -43,4 +43,9 @@ public enum ManifoldSquare {
   public char getMapChar() {
     return mapChar;
   }
+
+  @Override
+  public String toString() {
+    return String.valueOf(mapChar);
+  }
 }
