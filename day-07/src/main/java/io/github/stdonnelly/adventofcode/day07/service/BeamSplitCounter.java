@@ -1,9 +1,11 @@
 package io.github.stdonnelly.adventofcode.day07.service;
 
-import static io.github.stdonnelly.adventofcode.day07.model.ManifoldSquare.BEAM;
-import static io.github.stdonnelly.adventofcode.day07.model.ManifoldSquare.START;
-
 import io.github.stdonnelly.adventofcode.day07.model.ManifoldRow;
+import io.github.stdonnelly.adventofcode.day07.model.ManifoldSquare;
+import io.github.stdonnelly.adventofcode.day07.model.ManifoldSquare.Beam;
+import io.github.stdonnelly.adventofcode.day07.model.ManifoldSquare.Empty;
+import io.github.stdonnelly.adventofcode.day07.model.ManifoldSquare.Splitter;
+import io.github.stdonnelly.adventofcode.day07.model.ManifoldSquare.Start;
 import java.util.List;
 
 public class BeamSplitCounter {
@@ -22,24 +24,19 @@ public class BeamSplitCounter {
 
       for (int col = 0; col < thisManifoldRow.manifoldSquareList().size(); col++) {
         // See if above was a beam or source
-        if (BEAM.equals(lastManifoldRow.manifoldSquareList().get(col))
-            || START.equals(lastManifoldRow.manifoldSquareList().get(col))) {
+        final long aboveBeamCount = lastManifoldRow.manifoldSquareList().get(col).getBeamCount();
+        if (aboveBeamCount > 0) {
           // Split or propagate
-          switch (thisManifoldRow.manifoldSquareList().get(col)) {
-            case EMPTY:
-              thisManifoldRow.manifoldSquareList().set(col, BEAM);
-              break;
-            case SPLITTER:
-              thisManifoldRow.manifoldSquareList().set(col - 1, BEAM);
-              thisManifoldRow.manifoldSquareList().set(col + 1, BEAM);
-              splitCount++;
-              break;
-            case BEAM:
-              // Ignore if there is already a beam here
-              break;
-            case START:
-              throw new IllegalArgumentException(
-                  "Start found on row " + row + ". Only row 0 should have a start");
+          final ManifoldSquare thisManifoldSquare = thisManifoldRow.manifoldSquareList().get(col);
+          if (thisManifoldSquare instanceof Empty || thisManifoldSquare instanceof Beam) {
+            setOrIncrementBeamCount(thisManifoldRow.manifoldSquareList(), col, aboveBeamCount);
+          } else if (thisManifoldSquare instanceof Splitter) {
+            setOrIncrementBeamCount(thisManifoldRow.manifoldSquareList(), col - 1, aboveBeamCount);
+            setOrIncrementBeamCount(thisManifoldRow.manifoldSquareList(), col + 1, aboveBeamCount);
+            splitCount++;
+          } else {
+            throw new IllegalArgumentException(
+                "Unexpected manifold square found on row " + row + ".");
           }
         }
       }
@@ -49,5 +46,22 @@ public class BeamSplitCounter {
     }
 
     return splitCount;
+  }
+
+  private void setOrIncrementBeamCount(
+      List<ManifoldSquare> manifoldSquareList, int index, long additionalBeams) {
+    switch (manifoldSquareList.get(index)) {
+      case Empty _ -> {
+        Beam beam = new Beam();
+        beam.setBeamCount(additionalBeams);
+        manifoldSquareList.set(index, beam);
+      }
+      case Beam beam -> beam.addBeams(additionalBeams);
+      case Splitter _ -> throw new IllegalArgumentException("Splitter found in unexpected place");
+      case Start _ ->
+          throw new IllegalArgumentException(
+              "Start found on incorrect row. Only row 0 should have a start");
+      default -> throw new IllegalArgumentException("Unexpected manifold square type");
+    }
   }
 }

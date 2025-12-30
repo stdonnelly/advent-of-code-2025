@@ -32,7 +32,7 @@ class AppTest {
    */
   @Test
   void part2Test() throws IOException {
-    final int EXPECTED = -1;
+    final long EXPECTED = 40L;
     final InputLoader<ManifoldRow> inputLoader = new ManifoldRowLoader(EXAMPLE_FILE_NAME);
     final List<ManifoldRow> input = inputLoader.load();
     assertEquals(EXPECTED, App.part2(input));

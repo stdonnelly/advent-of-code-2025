@@ -26,9 +26,9 @@ public record ManifoldRow(List<ManifoldSquare> manifoldSquareList) {
   /// Check if all of the manifold squares are blank. At least for part 1, blank lines can be
   /// ignored.
   ///
-  /// @return `true` if all [ManifoldSquare]s in the row are [EMPTY][ManifoldSquare#EMPTY]
+  /// @return `true` if all [ManifoldSquare]s in the row are [ManifoldSquare.Empty]
   public boolean isBlank() {
-    return manifoldSquareList.stream().allMatch(ManifoldSquare.EMPTY::equals);
+    return manifoldSquareList.stream().allMatch(o -> o instanceof ManifoldSquare.Empty);
   }
 
   @Override
