@@ -29,11 +29,11 @@ public class App {
         }
     }
 
-    static int part1(final List<${inputDatum}> input) {
+    static long part1(final List<${inputDatum}> input) {
         return -1;
     }
 
-    static int part2(final List<${inputDatum}> input) {
+    static long part2(final List<${inputDatum}> input) {
         return -1;
     }
 }

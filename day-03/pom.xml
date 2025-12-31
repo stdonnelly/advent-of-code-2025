@@ -4,12 +4,12 @@
   <parent>
     <groupId>io.github.stdonnelly.adventofcode</groupId>
     <artifactId>advent-of-code-2025</artifactId>
-    <version>0.5.1</version>
+    <version>0.6.0</version>
   </parent>
 
   <groupId>io.github.stdonnelly.adventofcode</groupId>
   <artifactId>day-03</artifactId>
-  <version>0.5.1</version>
+  <version>0.6.0</version>
   <packaging>jar</packaging>
 
   <name>day-03</name>

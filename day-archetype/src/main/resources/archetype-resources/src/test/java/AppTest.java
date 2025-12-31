@@ -23,7 +23,7 @@ class AppTest
     @Test
     void part1Test() throws IOException
     {
-        final int EXPECTED = -1;
+        final long EXPECTED = -1L;
         final InputLoader<${inputDatum}> inputLoader = new ${inputDatum}Loader(EXAMPLE_FILE_NAME);
         final List<${inputDatum}> input = inputLoader.load();
         assertEquals(EXPECTED, App.part1(input));
@@ -37,7 +37,7 @@ class AppTest
     @Test
     void part2Test() throws IOException
     {
-        final int EXPECTED = -1;
+        final long EXPECTED = -1L;
         final InputLoader<${inputDatum}> inputLoader = new ${inputDatum}Loader(EXAMPLE_FILE_NAME);
         final List<${inputDatum}> input = inputLoader.load();
         assertEquals(EXPECTED, App.part2(input));
