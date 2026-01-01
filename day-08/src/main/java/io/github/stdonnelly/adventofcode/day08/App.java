@@ -2,10 +2,11 @@ package io.github.stdonnelly.adventofcode.day08;
 
 import io.github.stdonnelly.adventofcode.common.loader.InputLoader;
 import io.github.stdonnelly.adventofcode.day08.loader.Point3dLoader;
+import io.github.stdonnelly.adventofcode.day08.model.CircuitSet;
 import io.github.stdonnelly.adventofcode.day08.model.Point3d;
+import io.github.stdonnelly.adventofcode.day08.model.Point3dConnection;
 import io.github.stdonnelly.adventofcode.day08.service.CircuitFactory;
 import java.io.IOException;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -32,17 +33,16 @@ public class App {
 
   static long part1(final List<Point3d> input, final int connectionCount) {
     CircuitFactory circuitFactory = new CircuitFactory(input);
-    Set<Set<Point3d>> circuits = circuitFactory.getCircuits(connectionCount);
+    CircuitSet circuits = circuitFactory.getCircuits(connectionCount);
 
-    return circuits.stream()
-        .map(Set::size)
-        .sorted(Comparator.reverseOrder())
-        .limit(3)
-        .mapToLong(Long::valueOf)
-        .reduce(1L, (a, b) -> a * b);
+    return circuits.getLargestCircuits(3).stream().mapToLong(Set::size).reduce(1L, (a, b) -> a * b);
   }
 
   static long part2(final List<Point3d> input) {
-    return -1;
+    CircuitFactory circuitFactory = new CircuitFactory(input);
+    Point3dConnection connection = circuitFactory.findLongestConnectionNeededForTree();
+
+    // Multiply the x coordinates of the connection
+    return ((long) connection.point1().x()) * ((long) connection.point2().x());
   }
 }

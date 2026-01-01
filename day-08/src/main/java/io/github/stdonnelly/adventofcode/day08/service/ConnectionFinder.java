@@ -27,6 +27,13 @@ public class ConnectionFinder {
     }
   }
 
+  /// Get all connections, sorted by shortest first
+  ///
+  /// @see #getShortestConnections(int)
+  public List<Point3dConnection> getAllConnections() {
+    return connections;
+  }
+
   /// Build the connections sorted list
   private static List<Point3dConnection> buildConnections(final List<Point3d> points) {
     // Create an array list first. This will be saved as an unmodifiable list later
