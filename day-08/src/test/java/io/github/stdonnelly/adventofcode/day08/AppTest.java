@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 class AppTest {
   private static final String EXAMPLE_FILE_NAME = "example_input.txt";
+  private static final int TEST_CONNECTION_COUNT = 10;
 
   /**
    * Test part 1 with the example input
@@ -19,10 +20,10 @@ class AppTest {
    */
   @Test
   void part1Test() throws IOException {
-    final long EXPECTED = -1L;
+    final long EXPECTED = 40L;
     final InputLoader<Point3d> inputLoader = new Point3dLoader(EXAMPLE_FILE_NAME);
     final List<Point3d> input = inputLoader.load();
-    assertEquals(EXPECTED, App.part1(input));
+    assertEquals(EXPECTED, App.part1(input, TEST_CONNECTION_COUNT));
   }
 
   /**

@@ -1,7 +1,7 @@
 package io.github.stdonnelly.adventofcode.day08.model;
 
 /// A point in 3D space
-public record Point3d(double x, double y, double z) {
+public record Point3d(double x, double y, double z) implements Comparable<Point3d> {
   /// Parse an input object
   ///
   /// @param input The input string to parse
@@ -41,6 +41,14 @@ public record Point3d(double x, double y, double z) {
 
   @Override
   public String toString() {
-    return String.format("%.3f,%.3f,%.3f", x, y, z);
+    return String.format("%.0f,%.0f,%.0f", x, y, z);
+  }
+
+  /// Compare by magnitude
+  ///
+  /// {@inheritDoc}
+  @Override
+  public int compareTo(Point3d o) {
+    return Double.compare(getMagnitude(), o.getMagnitude());
   }
 }
