@@ -19,7 +19,7 @@ class AppTest {
    */
   @Test
   void part1Test() throws IOException {
-    final long EXPECTED = -1L;
+    final long EXPECTED = 50L;
     final InputLoader<Point2d> inputLoader = new Point2dLoader(EXAMPLE_FILE_NAME);
     final List<Point2d> input = inputLoader.load();
     assertEquals(EXPECTED, App.part1(input));

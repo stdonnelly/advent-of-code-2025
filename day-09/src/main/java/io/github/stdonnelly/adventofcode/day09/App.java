@@ -3,7 +3,10 @@ package io.github.stdonnelly.adventofcode.day09;
 import io.github.stdonnelly.adventofcode.common.loader.InputLoader;
 import io.github.stdonnelly.adventofcode.day09.loader.Point2dLoader;
 import io.github.stdonnelly.adventofcode.day09.model.Point2d;
+import io.github.stdonnelly.adventofcode.day09.model.Rectangle;
+import io.github.stdonnelly.adventofcode.day09.service.RectangleFactory;
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
 
 /** Day 09 solver */
@@ -27,7 +30,15 @@ public class App {
   }
 
   static long part1(final List<Point2d> input) {
-    return -1;
+    final RectangleFactory rectangleFactory = new RectangleFactory(input);
+    final List<Rectangle> rectangles = rectangleFactory.getRectangles();
+
+    return rectangles.stream()
+        .map(Rectangle::getArea)
+        .sorted(Comparator.reverseOrder())
+        .mapToLong(Long::longValue)
+        .findFirst()
+        .orElseThrow();
   }
 
   static long part2(final List<Point2d> input) {
