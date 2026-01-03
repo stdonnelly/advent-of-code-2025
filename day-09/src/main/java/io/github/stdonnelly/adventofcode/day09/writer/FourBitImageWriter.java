@@ -1,9 +1,8 @@
 package io.github.stdonnelly.adventofcode.day09.writer;
 
+import io.github.stdonnelly.adventofcode.day09.model.Floor;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-import io.github.stdonnelly.adventofcode.day09.model.Floor;
 
 /// Writes a 4-bit image based on [Floor]
 public class FourBitImageWriter {

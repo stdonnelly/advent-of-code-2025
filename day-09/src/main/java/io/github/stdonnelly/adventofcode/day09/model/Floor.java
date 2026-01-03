@@ -1,18 +1,50 @@
 package io.github.stdonnelly.adventofcode.day09.model;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /// Represents the tiled floor
-public record Floor(FloorTile[][] tiles) {
-  public static Floor ofSize(int width, int height) {
-    FloorTile[][] rows = new FloorTile[height][];
-    for (int i = 0; i < height; i++) {
-      rows[height] = new FloorTile[width];
+public class Floor {
+  // #region Fields
+  /// The tiles of the floor
+  public final FloorTile[][] tiles;
+
+  // #endregion
+
+  // #region Constructors and factory methods
+  public Floor(FloorTile[][] tiles) {
+    // All of this is validation except for the last line
+
+    // tiles must be non-null
+    Objects.requireNonNull(tiles);
+
+    // If there are any rows, they must be non-null and the same length
+    if (tiles.length > 0) {
+      int rowLength = tiles[0].length;
+
+      for (FloorTile[] row : tiles) {
+        if (row.length != rowLength) {
+          throw new IndexOutOfBoundsException("rows must all be the same length");
+        }
+      }
     }
-    return new Floor(rows);
+
+    this.tiles = tiles;
   }
 
+  /// Construct a new instance with the given parameters
+  ///
+  /// The initial instance will be completely white
+  /// @param width The number of columns
+  /// @param height The number of rows
+  public static Floor ofSize(final int width, final int height) {
+    return new Floor(getTilesForSize(width, height));
+  }
+
+  // #endregion
+
+  // #region Public methods
   /// Returns a copy of this, cropped by removing fully white columns and rows on each side
   public Floor crop() {
     // The indexes to crop to
@@ -89,6 +121,43 @@ public record Floor(FloorTile[][] tiles) {
     return new Floor(cropped);
   }
 
+  // #endregion
+
+  // #region Object method overrides
+  @Override
+  public final boolean equals(Object arg0) {
+    return arg0 instanceof Floor o && Arrays.deepEquals(tiles, o.tiles);
+  }
+
+  @Override
+  public final int hashCode() {
+    return Arrays.deepHashCode(tiles);
+  }
+
+  @Override
+  public final String toString() {
+    return Arrays.stream(tiles)
+        .map(row -> Arrays.stream(row).map(FloorTile::toString).collect(Collectors.joining()))
+        .collect(Collectors.joining("\n"));
+  }
+
+  // #endregion
+
+  // #region Private/protected helpers
+  /// Helper for [ofSize(int,int)][#ofSize(int, int)]
+  protected static FloorTile[][] getTilesForSize(int width, int height) {
+    FloorTile[][] rows = new FloorTile[height][];
+    for (int i = 0; i < height; i++) {
+      rows[i] = new FloorTile[width];
+
+      // Fill with white
+      for (int j = 0; j < width; j++) {
+        rows[i][j] = FloorTile.WHITE;
+      }
+    }
+    return rows;
+  }
+
   /// Get the index of the first tile that is not [FloorTile#WHITE], or `-1` if all tiles are white
   private int getFirstNonWhiteIndex(FloorTile[] row) {
     for (int i = 0; i < row.length; i++) {
@@ -110,21 +179,5 @@ public record Floor(FloorTile[][] tiles) {
 
     return -1;
   }
-
-  @Override
-  public final boolean equals(Object arg0) {
-    return arg0 instanceof Floor(FloorTile[][] otherTiles) && Arrays.deepEquals(tiles, otherTiles);
-  }
-
-  @Override
-  public final int hashCode() {
-    return Arrays.deepHashCode(tiles);
-  }
-
-  @Override
-  public final String toString() {
-    return Arrays.stream(tiles)
-        .map(row -> Arrays.stream(row).map(FloorTile::toString).collect(Collectors.joining()))
-        .collect(Collectors.joining("\n"));
-  }
+  // #endregion
 }
