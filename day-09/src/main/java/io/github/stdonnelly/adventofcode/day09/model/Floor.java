@@ -5,15 +5,9 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /// Represents the tiled floor
-public class Floor {
-  // #region Fields
-  /// The tiles of the floor
-  public final FloorTile[][] tiles;
-
-  // #endregion
-
+public record Floor(FloorTile[][] tiles) {
   // #region Constructors and factory methods
-  public Floor(FloorTile[][] tiles) {
+  public Floor {
     // All of this is validation except for the last line
 
     // tiles must be non-null
@@ -29,8 +23,6 @@ public class Floor {
         }
       }
     }
-
-    this.tiles = tiles;
   }
 
   /// Construct a new instance with the given parameters
@@ -126,7 +118,7 @@ public class Floor {
   // #region Object method overrides
   @Override
   public final boolean equals(Object arg0) {
-    return arg0 instanceof Floor o && Arrays.deepEquals(tiles, o.tiles);
+    return arg0 instanceof Floor(FloorTile[][] otherTiles) && Arrays.deepEquals(tiles, otherTiles);
   }
 
   @Override
