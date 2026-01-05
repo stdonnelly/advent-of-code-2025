@@ -7,7 +7,7 @@ import java.awt.image.RenderedImage;
 
 /// Mapper from [Floor] to [RenderedImage]
 public class FloorToRenderedImageMapper {
-  //#region Constants and fields
+  // #region Constants and fields
   private static final IndexColorModel INDEX_COLOR_MODEL =
       new IndexColorModel(
           2,
@@ -16,10 +16,10 @@ public class FloorToRenderedImageMapper {
           new byte[] {(byte) 0xff, (byte) 0x00, (byte) 0xff, (byte) 0x00},
           new byte[] {(byte) 0xff, (byte) 0x00, (byte) 0x00, (byte) 0xff},
           new byte[] {(byte) 0xff, (byte) 0x00, (byte) 0x00, (byte) 0x00});
-  
-  //#endregion
 
-  //#region Public methods
+  // #endregion
+
+  // #region Public methods
   /// The actual map function
   public RenderedImage map(Floor floor) {
     // Get width and height
@@ -39,13 +39,13 @@ public class FloorToRenderedImageMapper {
     return image;
   }
 
-  //#endregion
+  // #endregion
 
-  //#region Private and protected helpers
+  // #region Private and protected helpers
   /// Get the base BufferedImage
   public BufferedImage getBaseImage(int width, int height) {
     return new BufferedImage(width, height, BufferedImage.TYPE_BYTE_BINARY, INDEX_COLOR_MODEL);
   }
 
-  //#endregion
+  // #endregion
 }
