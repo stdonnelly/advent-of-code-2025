@@ -2,8 +2,14 @@
     "java.configuration.updateBuildConfiguration": "interactive",
     "cSpell.words": [
         "adventofcode",
+        "GREYSCALE",
+        "Idat",
+        "Iend",
+        "Ihdr",
+        "Plte",
         "snakeyaml",
-        "stdonnelly"
+        "stdonnelly",
+        "TRUECOLOR"
     ],
     // Disable the Red Hat formatter in favor of the standalone Google formatter extension
     "java.format.enabled": false,
