@@ -1,6 +1,7 @@
 package io.github.stdonnelly.adventofcode.day09.model;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -127,6 +128,56 @@ public record Floor(FloorTile[][] tiles) {
     }
   }
 
+  /// Draw the closed polygon represented by the list of points
+  public void drawShape(List<Point2d> points) {
+    for (int i = 1; i < points.size(); i++) {
+      drawLine(points.get(i - 1), points.get(i));
+    }
+
+    drawLine(points.getLast(), points.getFirst());
+  }
+
+  /// Draw the closed polygon represented by the list of points and fill it green
+  public void drawFilledShape(List<Point2d> points) {
+    drawShape(points);
+    fill();
+  }
+
+  /// Draw a line between two points
+  ///
+  /// The resulting line will be green with red ends. Diagonal lines are not supported
+  ///
+  /// @throws ArithmeticException if either coordinate in either point is outside of the range of an
+  /// integer
+  public void drawLine(Point2d from, Point2d to) {
+    int fromX = Math.toIntExact(from.x());
+    int fromY = Math.toIntExact(from.y());
+    int toX = Math.toIntExact(to.x());
+    int toY = Math.toIntExact(to.y());
+    // Find out if it is vertical or horizontal
+    if (fromX == toX) {
+      // Vertical
+      drawLineVertical(fromX, fromY, toY);
+    } else if (fromY == toY) {
+      // Horizontal
+      drawLineHorizontal(fromY, fromX, toX);
+    } else {
+      throw new UnsupportedOperationException("Diagonal lines are not supported");
+    }
+  }
+
+  /**
+   * Fill the shape with green
+   *
+   * <p>This uses a modified version of the even-odd rule. Instead of drawing a ray from inside to
+   * infinity, this draws rays from left to right, toggling if it fills green or not.
+   *
+   * @see <a href="https://en.wikipedia.org/wiki/Even%E2%80%93odd_rule">Even–odd rule</a>
+   */
+  public void fill() {
+    Arrays.stream(tiles).forEach(this::fillRow);
+  }
+
   // #endregion
 
   // #region Object method overrides
@@ -150,6 +201,69 @@ public record Floor(FloorTile[][] tiles) {
   // #endregion
 
   // #region Private/protected helpers
+
+  /// Helper for [drawLine(Point2d,Point2d)][#drawLine(Point2d,Point2d)]
+  private void drawLineHorizontal(int row, int fromColumn, int toColumn) {
+    final FloorTile[] rowTiles = tiles[row];
+
+    // Swap the columns if necessary to make sure "from" is after "to"
+    if (toColumn < fromColumn) {
+      int temp = toColumn;
+      toColumn = fromColumn;
+      fromColumn = temp;
+    }
+
+    // Draw the points
+    rowTiles[fromColumn] = FloorTile.RED;
+    rowTiles[toColumn] = FloorTile.RED;
+
+    // Draw the line
+    for (int i = fromColumn + 1; i < toColumn; i++) {
+      if (FloorTile.WHITE.equals(rowTiles[i])) {
+        rowTiles[i] = FloorTile.GREEN;
+      }
+    }
+  }
+
+  /// Helper for [drawLine(Point2d,Point2d)][#drawLine(Point2d,Point2d)]
+  private void drawLineVertical(int column, int fromRow, int toRow) {
+    // Swap the columns if necessary to make sure "from" is after "to"
+    if (toRow < fromRow) {
+      int temp = toRow;
+      toRow = fromRow;
+      fromRow = temp;
+    }
+
+    // Draw the points
+    tiles[fromRow][column] = FloorTile.RED;
+    tiles[toRow][column] = FloorTile.RED;
+
+    // Draw the line
+    for (int i = fromRow + 1; i < toRow; i++) {
+      if (FloorTile.WHITE.equals(tiles[i][column])) {
+        tiles[i][column] = FloorTile.GREEN;
+      }
+    }
+  }
+
+  /// Helper for [fill()][#fill()]
+  private void fillRow(FloorTile[] row) {
+    boolean inside = false;
+
+    for (int i = 1; i < row.length; i++) {
+      // If this is red or green and the previous is not red or green
+      if ((row[i] != FloorTile.GREEN && row[i] != FloorTile.RED)
+          && (row[i - 1] == FloorTile.GREEN || row[i - 1] == FloorTile.RED)) {
+        inside = !inside;
+      }
+
+      // If this is inside and white, fill it
+      if (inside && row[i] == FloorTile.WHITE) {
+        row[i] = FloorTile.GREEN;
+      }
+    }
+  }
+
   /// Helper for [ofSize(int,int)][#ofSize(int, int)]
   protected static FloorTile[][] getTilesForSize(int width, int height) {
     FloorTile[][] rows = new FloorTile[height][];
