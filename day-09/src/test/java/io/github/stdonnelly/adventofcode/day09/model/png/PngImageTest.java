@@ -66,7 +66,7 @@ class PngImageTest {
   }
 
   private PngImage getPalletteColorPngImage() {
-    PackedBitBuffer bitBuffer = new PackedBitBuffer(24 * 6, 2);
+    PackedBitBuffer bitBuffer = PackedBitBuffer.withCapacity(24 * 6, 2);
 
     bitBuffer.putByte((byte) 0);
     bitBuffer.put((byte) 1);

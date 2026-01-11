@@ -33,7 +33,7 @@ class PackedBitBufferTest {
     assertThrows(
         IllegalArgumentException.class,
         () -> {
-          new PackedBitBuffer(1, bitDepth);
+          PackedBitBuffer.withCapacity(1, bitDepth);
         });
   }
 
@@ -43,7 +43,7 @@ class PackedBitBufferTest {
     assertThrows(
         IllegalArgumentException.class,
         () -> {
-          new PackedBitBuffer(-1, 1);
+          PackedBitBuffer.withCapacity(-1, 1);
         });
   }
 
@@ -51,7 +51,7 @@ class PackedBitBufferTest {
   @ParameterizedTest
   @ValueSource(ints = {1, 2, 4})
   void testConstructor_bitDepth(final int bitDepth) {
-    assertEquals(bitDepth, new PackedBitBuffer(0, bitDepth).getBitDepth());
+    assertEquals(bitDepth, PackedBitBuffer.withCapacity(0, bitDepth).getBitDepth());
   }
 
   /// Capacity rounds up to the nearest multiple of 8
@@ -66,7 +66,7 @@ class PackedBitBufferTest {
           9,16
           """)
   void testConstructor_capacity(final int inputCapacity, final int expectedCapacity) {
-    final PackedBitBuffer packedBitBuffer = new PackedBitBuffer(inputCapacity, 1);
+    final PackedBitBuffer packedBitBuffer = PackedBitBuffer.withCapacity(inputCapacity, 1);
     assertEquals(expectedCapacity, packedBitBuffer.getCapacity());
     assertEquals(expectedCapacity / 8, packedBitBuffer.getByteBuffer().capacity());
   }
@@ -81,7 +81,7 @@ class PackedBitBufferTest {
   @ParameterizedTest
   @MethodSource("testPutArgumentProvider")
   void testPut(final int bitDepth, final byte[] inputElements, final byte[] expectedBytes) {
-    PackedBitBuffer packedBitBuffer = new PackedBitBuffer(16, bitDepth);
+    PackedBitBuffer packedBitBuffer = PackedBitBuffer.withCapacity(16, bitDepth);
 
     for (byte element : inputElements) {
       packedBitBuffer.put(element);
@@ -115,7 +115,7 @@ class PackedBitBufferTest {
   /// Test putting an aligned byte
   @Test
   void testPutByte_aligned() {
-    PackedBitBuffer packedBitBuffer = new PackedBitBuffer(8, 1);
+    PackedBitBuffer packedBitBuffer = PackedBitBuffer.withCapacity(8, 1);
     packedBitBuffer.putByte((byte) 0b0101_1010);
     assertEquals(0b0101_1010, packedBitBuffer.getBytes()[0]);
   }
@@ -123,7 +123,7 @@ class PackedBitBufferTest {
   /// Test putting a misaligned byte
   @Test
   void testPutByte_misaligned() {
-    PackedBitBuffer packedBitBuffer = new PackedBitBuffer(16, 1);
+    PackedBitBuffer packedBitBuffer = PackedBitBuffer.withCapacity(16, 1);
     packedBitBuffer.put((byte) 1);
     packedBitBuffer.putByte((byte) 0b1101_1011);
     assertEquals((byte) 0b1110_1101, packedBitBuffer.getBytes()[0]);

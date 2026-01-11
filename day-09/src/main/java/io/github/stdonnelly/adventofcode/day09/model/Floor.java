@@ -113,6 +113,20 @@ public record Floor(FloorTile[][] tiles) {
     return new Floor(cropped);
   }
 
+  /// Get the number of rows in this floor
+  public int getHeight() {
+    return tiles.length;
+  }
+
+  /// Get the number of tiles in each row
+  public int getWidth() {
+    if (tiles.length <= 0) {
+      return 0;
+    } else {
+      return tiles[0].length;
+    }
+  }
+
   // #endregion
 
   // #region Object method overrides
