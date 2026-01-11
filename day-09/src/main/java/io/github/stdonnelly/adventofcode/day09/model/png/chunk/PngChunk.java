@@ -2,7 +2,6 @@ package io.github.stdonnelly.adventofcode.day09.model.png.chunk;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.zip.CRC32;
 
 /// A chunk in the PNG specification
@@ -13,7 +12,7 @@ public abstract class PngChunk {
   /// <q cite="https://www.w3.org/TR/png-3/#5Chunk-layout">The length counts only the data field,
   /// not itself, the chunk type, or the CRC.</q>
   public int getLength() {
-    return getData().length;
+    return getData().remaining();
   }
 
   /// Get the four-character type string
@@ -21,8 +20,10 @@ public abstract class PngChunk {
 
   /// Get the data
   ///
-  /// For empty chunks, this will return an empty array.
-  public abstract byte[] getData();
+  /// @implSpec For empty chunks, this should return an empty array.
+  /// @implSpec Changes to the returned object, such as changing the mark or position, should not
+  /// change the backing data or the object that is returned if this method is called again.
+  public abstract ByteBuffer getData();
 
   /// Get the CRC32 of the chunk type and data fields, but not length
   public int getCrc() {
@@ -36,7 +37,7 @@ public abstract class PngChunk {
   }
 
   /// Get the full chunk, including the length, header, data, and CRC
-  public byte[] getFullChunk() {
+  public ByteBuffer getFullChunk() {
     // Ensure that the type has a length of 4
     if (getType().length() != 4) {
       throw new IllegalStateException("Chunk type name length must be 4");
@@ -57,7 +58,7 @@ public abstract class PngChunk {
       throw new IllegalArgumentException("Full chunk byte buffer should be filled");
     }
 
-    return byteBuffer.array();
+    return byteBuffer.rewind();
   }
 
   @Override
@@ -67,7 +68,7 @@ public abstract class PngChunk {
     return obj instanceof PngChunk o
         && this.getType().equals(o.getType())
         && this.getLength() == o.getLength()
-        && Arrays.equals(this.getData(), o.getData());
+        && this.getData().equals(o.getData());
   }
 
   @Override

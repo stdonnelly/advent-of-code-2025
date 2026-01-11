@@ -9,16 +9,7 @@ import java.util.Objects;
 public final class Ihdr extends PngChunk {
   private final ByteBuffer data;
 
-  /// Constructor
-  ///
-  /// @param width The width of the image. Treated as an unsigned integer. Must be nonzero.
-  /// @param height The height of the image. Treated as an unsigned integer. Must be nonzero.
-  /// @param bitDepth The bit depth, The allowed bit depth depends on the color type.
-  /// @param colorType The color type. Must not be `null`.
-  /// @param compressionMethod The compression method. Only 0 is allowed.
-  /// @param filterMethod The filter method. Only 0 is allowed.
-  /// @param interlaceMethod The interlace method. Must not be `null`.
-  public Ihdr(
+  private Ihdr(
       int width,
       int height,
       byte bitDepth,
@@ -49,21 +40,26 @@ public final class Ihdr extends PngChunk {
             .put(colorType.getColorTypeId())
             .put(compressionMethod)
             .put(filterMethod)
-            .put(interlaceMethod.getId());
+            .put(interlaceMethod.getId())
+            .rewind();
   }
 
+  /// The width of the image. Treated as an unsigned integer. Must be nonzero.
   public int getWidth() {
     return data.getInt(0);
   }
 
+  /// The height of the image. Treated as an unsigned integer. Must be nonzero.
   public int getHeight() {
     return data.getInt(4);
   }
 
+  /// The bit depth, The allowed bit depth depends on the color type.
   public byte getBitDepth() {
     return data.get(8);
   }
 
+  /// The color type. Must not be `null`.
   public ColorType getColorType() {
     return switch (data.get(9)) {
       case 0 -> ColorType.GREYSCALE;
@@ -75,14 +71,17 @@ public final class Ihdr extends PngChunk {
     };
   }
 
+  /// The compression method. Only 0 is allowed.
   public byte getCompressionMethod() {
     return data.get(10);
   }
 
+  /// The filter method. Only 0 is allowed.
   public byte getFilterMethod() {
     return data.get(11);
   }
 
+  /// The interlace method. Must not be `null`.
   public InterlaceMethod getInterlaceMethod() {
     return switch (data.get(12)) {
       case 0 -> InterlaceMethod.NONE;
@@ -103,8 +102,8 @@ public final class Ihdr extends PngChunk {
   }
 
   @Override
-  public byte[] getData() {
-    return data.array();
+  public ByteBuffer getData() {
+    return data.asReadOnlyBuffer();
   }
 
   public static class Builder {
@@ -116,36 +115,43 @@ public final class Ihdr extends PngChunk {
     private byte filterMethod;
     private InterlaceMethod interlaceMethod;
 
+    /// The width of the image. Treated as an unsigned integer. Must be nonzero.
     public Builder width(int width) {
       this.width = width;
       return this;
     }
 
+    /// The height of the image. Treated as an unsigned integer. Must be nonzero.
     public Builder height(int height) {
       this.height = height;
       return this;
     }
 
+    /// The bit depth, The allowed bit depth depends on the color type.
     public Builder bitDepth(byte bitDepth) {
       this.bitDepth = bitDepth;
       return this;
     }
 
+    /// The color type. Must not be `null`.
     public Builder colorType(ColorType colorType) {
       this.colorType = colorType;
       return this;
     }
 
+    /// The compression method. Only 0 is allowed.
     public Builder compressionMethod(byte compressionMethod) {
       this.compressionMethod = compressionMethod;
       return this;
     }
 
+    /// The filter method. Only 0 is allowed.
     public Builder filterMethod(byte filterMethod) {
       this.filterMethod = filterMethod;
       return this;
     }
 
+    /// The interlace method. Must not be `null`.
     public Builder interlaceMethod(InterlaceMethod interlaceMethod) {
       this.interlaceMethod = interlaceMethod;
       return this;
