@@ -48,4 +48,11 @@ public final class HorizontalLine extends Line {
         && verticalLine.getTop() < this.getRow()
         && this.getRow() < verticalLine.getBottom();
   }
+
+  @Override
+  public boolean contains(Point2d point) {
+    return (point.y() == this.getRow())
+        && (this.getLeft() < point.x())
+        && (point.x() < this.getRight());
+  }
 }

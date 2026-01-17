@@ -46,6 +46,9 @@ public abstract sealed class Line permits HorizontalLine, VerticalLine {
   /// - [VerticalLine] never intersects another [VerticalLine]
   public abstract boolean intersects(final Line other);
 
+  /// Check if the given point falls on this line (not including the ends of this line)
+  public abstract boolean contains(final Point2d point);
+
   /// Checks if any [Line] in the given list intersects with this one
   ///
   /// @see [intersects(Line)][#intersects(Line)]

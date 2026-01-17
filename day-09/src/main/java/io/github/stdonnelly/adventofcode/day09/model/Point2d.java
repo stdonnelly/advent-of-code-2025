@@ -1,6 +1,8 @@
 package io.github.stdonnelly.adventofcode.day09.model;
 
 /// A point in 2D space
+/// @param x The column
+/// @param y The row
 public record Point2d(long x, long y) {
   /// Parse an input object
   ///

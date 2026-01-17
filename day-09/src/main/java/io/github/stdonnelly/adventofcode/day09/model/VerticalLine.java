@@ -42,4 +42,11 @@ public final class VerticalLine extends Line {
     // Just defer to the HorizontalLine implementation, unless these are both vertical
     return other instanceof HorizontalLine && other.intersects(this);
   }
+
+  @Override
+  public boolean contains(Point2d point) {
+    return (point.x() == this.getColumn())
+        && (this.getTop() < point.y())
+        && (point.y() < this.getBottom());
+  }
 }
