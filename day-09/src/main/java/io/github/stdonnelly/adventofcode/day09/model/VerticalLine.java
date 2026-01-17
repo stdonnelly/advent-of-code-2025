@@ -38,7 +38,7 @@ public final class VerticalLine extends Line {
   }
 
   @Override
-  public boolean intersects(Line other) {
+  public boolean intersects(final Line other) {
     // Just defer to the HorizontalLine implementation, unless these are both vertical
     return other instanceof HorizontalLine && other.intersects(this);
   }
