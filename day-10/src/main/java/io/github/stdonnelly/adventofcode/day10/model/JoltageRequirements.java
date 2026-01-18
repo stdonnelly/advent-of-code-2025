@@ -1,6 +1,7 @@
 package io.github.stdonnelly.adventofcode.day10.model;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 /// Joltage requirements for the machine
 ///
@@ -12,7 +13,14 @@ public record JoltageRequirements(int[] requiredJoltage) {
   /// @return The input after parsing
   /// @throws IllegalArgumentException If the input is not parsable
   public static JoltageRequirements parse(String input) throws IllegalArgumentException {
-    throw new java.lang.UnsupportedOperationException("TODO: write input parser");
+    final String[] splitInput = MachineDescription.stripBrackets(input).split(",");
+    int[] joltage = new int[splitInput.length];
+
+    for (int i = 0; i < splitInput.length; i++) {
+      joltage[i] = Integer.parseInt(splitInput[i]);
+    }
+
+    return new JoltageRequirements(joltage);
   }
 
   @Override
@@ -28,7 +36,8 @@ public record JoltageRequirements(int[] requiredJoltage) {
 
   @Override
   public final String toString() {
-    // TODO
-    throw new UnsupportedOperationException("TODO");
+    return Arrays.stream(requiredJoltage)
+        .mapToObj(Integer::toString)
+        .collect(Collectors.joining(",", "{", "}"));
   }
 }

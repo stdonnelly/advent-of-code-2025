@@ -1,6 +1,7 @@
 package io.github.stdonnelly.adventofcode.day10.model;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 /// A button wiring schematic
 ///
@@ -13,7 +14,14 @@ public record ButtonSchematic(int[] connectedLights) {
   /// @return The input after parsing
   /// @throws IllegalArgumentException If the input is not parsable
   public static ButtonSchematic parse(String input) throws IllegalArgumentException {
-    throw new java.lang.UnsupportedOperationException("TODO: write input parser");
+    final String[] splitInput = MachineDescription.stripBrackets(input).split(",");
+    int[] lights = new int[splitInput.length];
+
+    for (int i = 0; i < splitInput.length; i++) {
+      lights[i] = Integer.parseInt(splitInput[i]);
+    }
+
+    return new ButtonSchematic(lights);
   }
 
   @Override
@@ -29,7 +37,8 @@ public record ButtonSchematic(int[] connectedLights) {
 
   @Override
   public final String toString() {
-    // TODO
-    throw new UnsupportedOperationException("TODO");
+    return Arrays.stream(connectedLights)
+        .mapToObj(Integer::toString)
+        .collect(Collectors.joining(",", "(", ")"));
   }
 }

@@ -4,6 +4,9 @@ import java.util.Arrays;
 
 /// A diagram containing the desired end state of the indicator lights
 ///
+/// - `.` means "off" and will be represented by `false`
+/// - `#` means "on" and will be represented by `true`
+///
 /// @param indicatorLights An array of booleans where `true` is on and `false` is off
 public record IndicatorLightDiagram(boolean[] indicatorLights) {
   /// Parse an input object
@@ -12,7 +15,22 @@ public record IndicatorLightDiagram(boolean[] indicatorLights) {
   /// @return The input after parsing
   /// @throws IllegalArgumentException If the input is not parsable
   public static IndicatorLightDiagram parse(String input) throws IllegalArgumentException {
-    throw new java.lang.UnsupportedOperationException("TODO: write input parser");
+    final String trimmedInput = MachineDescription.stripBrackets(input);
+    boolean[] lights = new boolean[trimmedInput.length()];
+
+    for (int i = 0; i < trimmedInput.length(); i++) {
+      lights[i] =
+          switch (trimmedInput.charAt(i)) {
+            case '.' -> false;
+            case '#' -> true;
+            default ->
+                throw new IllegalArgumentException(
+                    "Unexpected character while parsing indicator light diagram: "
+                        + trimmedInput.charAt(i));
+          };
+    }
+
+    return new IndicatorLightDiagram(lights);
   }
 
   @Override
@@ -28,7 +46,10 @@ public record IndicatorLightDiagram(boolean[] indicatorLights) {
 
   @Override
   public final String toString() {
-    // TODO
-    throw new UnsupportedOperationException("TODO");
+    char[] indicatorLightChars = new char[indicatorLights.length];
+    for (int i = 0; i < indicatorLights.length; i++) {
+      indicatorLightChars[i] = indicatorLights[i] ? '#' : '.';
+    }
+    return "[" + String.valueOf(indicatorLightChars) + "]";
   }
 }
