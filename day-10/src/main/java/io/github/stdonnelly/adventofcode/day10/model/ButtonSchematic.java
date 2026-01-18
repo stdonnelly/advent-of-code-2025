@@ -24,6 +24,16 @@ public record ButtonSchematic(int[] connectedLights) {
     return new ButtonSchematic(lights);
   }
 
+  /// Get the representation of this as a bitmask
+  public short toBits() {
+    short bits = 0;
+    for (int light : connectedLights) {
+      bits |= 1 << light;
+    }
+
+    return bits;
+  }
+
   @Override
   public final boolean equals(Object other) {
     return other instanceof ButtonSchematic(int[] otherConnectedLights)

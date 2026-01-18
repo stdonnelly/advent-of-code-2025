@@ -33,6 +33,18 @@ public record IndicatorLightDiagram(boolean[] indicatorLights) {
     return new IndicatorLightDiagram(lights);
   }
 
+  /// Get the representation of this as a bitmask
+  public short toBits() {
+    short bits = 0;
+    for (int i = 0; i < indicatorLights.length; i++) {
+      if (indicatorLights[i]) {
+        bits |= 1 << i;
+      }
+    }
+
+    return bits;
+  }
+
   @Override
   public final boolean equals(Object other) {
     return other instanceof IndicatorLightDiagram(boolean[] otherIndicatorLights)
