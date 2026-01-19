@@ -18,4 +18,8 @@
     "[java]": {
         "editor.tabSize": 2
     },
+    "markdownlint.config": {
+        // Not all markdown features are enabled.
+        "no-inline-html": false
+    }
 }
