@@ -4,6 +4,7 @@ import io.github.stdonnelly.adventofcode.common.loader.InputLoader;
 import io.github.stdonnelly.adventofcode.day10.loader.MachineDescriptionLoader;
 import io.github.stdonnelly.adventofcode.day10.model.MachineDescription;
 import io.github.stdonnelly.adventofcode.day10.service.MinimumButtonCounter;
+import io.github.stdonnelly.adventofcode.day10.service.MinimumButtonCounterJoltage;
 import java.io.IOException;
 import java.util.List;
 
@@ -33,6 +34,7 @@ public class App {
   }
 
   static long part2(final List<MachineDescription> input) {
-    return -1;
+    MinimumButtonCounterJoltage minimumButtonCounter = new MinimumButtonCounterJoltage();
+    return input.stream().mapToLong(minimumButtonCounter::getMinimumButtonPresses).sum();
   }
 }

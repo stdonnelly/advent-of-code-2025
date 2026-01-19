@@ -33,7 +33,7 @@ class AppTest {
    */
   @Test
   void part2Test() throws IOException {
-    final long EXPECTED = -1L;
+    final long EXPECTED = 33L;
     final InputLoader<MachineDescription> inputLoader =
         new MachineDescriptionLoader(EXAMPLE_FILE_NAME);
     final List<MachineDescription> input = inputLoader.load();
