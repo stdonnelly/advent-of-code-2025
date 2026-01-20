@@ -34,6 +34,14 @@ public record ButtonSchematic(int[] connectedLights) {
     return bits;
   }
 
+  /// Check if this instance contains `n`
+  ///
+  /// @param n The number to check for
+  /// @return `true` if this button is connected to element `n`, `false` otherwise
+  public boolean contains(int n) {
+    return Arrays.stream(connectedLights).anyMatch(thisNum -> thisNum == n);
+  }
+
   @Override
   public final boolean equals(Object other) {
     return other instanceof ButtonSchematic(int[] otherConnectedLights)

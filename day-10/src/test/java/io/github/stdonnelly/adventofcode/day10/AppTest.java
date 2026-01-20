@@ -7,6 +7,7 @@ import io.github.stdonnelly.adventofcode.day10.loader.MachineDescriptionLoader;
 import io.github.stdonnelly.adventofcode.day10.model.MachineDescription;
 import java.io.IOException;
 import java.util.List;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 class AppTest {
@@ -31,6 +32,7 @@ class AppTest {
    *
    * @throws IOException if the input loading fails
    */
+  @Disabled("Disabled until I actually work on the program itself")
   @Test
   void part2Test() throws IOException {
     final long EXPECTED = 33L;

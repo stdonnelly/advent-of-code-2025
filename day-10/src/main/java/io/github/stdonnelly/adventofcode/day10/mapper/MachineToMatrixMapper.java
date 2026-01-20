@@ -52,16 +52,11 @@ public class MachineToMatrixMapper {
     final int length = buttonSchematics.length;
     int[] values = new int[length + 1];
     for (int i = 0; i < length; i++) {
-      values[i] = arrayContains(values, joltageIndex) ? 1 : 0;
+      values[i] = buttonSchematics[i].contains(joltageIndex) ? 1 : 0;
     }
     // Put the joltage requirement on the last column
     values[length] = joltageRequirement;
 
     return new Matrix.Row(Arrays.stream(values).boxed().toList());
-  }
-
-  /// Check if `arr` contains `n`
-  private boolean arrayContains(final int[] arr, final int n) {
-    return Arrays.stream(arr).anyMatch(thisNum -> thisNum == n);
   }
 }
