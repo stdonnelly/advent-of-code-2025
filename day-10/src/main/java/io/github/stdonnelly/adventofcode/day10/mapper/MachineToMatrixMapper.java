@@ -4,8 +4,6 @@ import io.github.stdonnelly.adventofcode.day10.model.ButtonSchematic;
 import io.github.stdonnelly.adventofcode.day10.model.JoltageRequirements;
 import io.github.stdonnelly.adventofcode.day10.model.MachineDescription;
 import io.github.stdonnelly.adventofcode.day10.model.Matrix;
-import java.util.Arrays;
-import java.util.List;
 
 /// Mapper from [MachineDescription] to [Matrix]
 public class MachineToMatrixMapper {
@@ -32,7 +30,7 @@ public class MachineToMatrixMapper {
     for (int i = 0; i < length; i++) {
       rows[i] = mapRow(buttonSchematics, joltageRequirements.requiredJoltage()[i], i);
     }
-    return new Matrix(List.of(rows));
+    return new Matrix(rows);
   }
 
   /// Map the given [ButtonSchematic] array and the `joltageRequirement` to a row in an augmented
@@ -57,6 +55,6 @@ public class MachineToMatrixMapper {
     // Put the joltage requirement on the last column
     values[length] = joltageRequirement;
 
-    return new Matrix.Row(Arrays.stream(values).boxed().toList());
+    return new Matrix.Row(values);
   }
 }

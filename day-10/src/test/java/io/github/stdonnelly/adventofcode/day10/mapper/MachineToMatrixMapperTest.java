@@ -45,7 +45,8 @@ class MachineToMatrixMapperTest {
           new ButtonSchematic(new int[] {0, 1}),
         };
     final Matrix.Row expected =
-        new Matrix.Row(Arrays.stream(expectedRowString.split(":")).map(Integer::valueOf).toList());
+        new Matrix.Row(
+            Arrays.stream(expectedRowString.split(":")).mapToInt(Integer::parseInt).toArray());
 
     assertEquals(expected, MAPPER.mapRow(buttonSchematics, joltageRequirement, joltageIndex));
   }
