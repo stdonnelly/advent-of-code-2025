@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.support.ParameterDeclarations;
 
+@SuppressWarnings("exports")
 public class MachineProvider implements ArgumentsProvider {
   private final List<Object[]> arguments;
 

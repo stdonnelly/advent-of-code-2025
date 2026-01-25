@@ -5,7 +5,12 @@ import java.util.stream.Collectors;
 
 /// Represents a mathematical matrix
 public class Matrix {
+  // #region Fields
   private final List<Row> rows;
+
+  // #endregion
+
+  // #region Constructors
 
   /// Constructor
   ///
@@ -14,12 +19,41 @@ public class Matrix {
     this.rows = List.copyOf(rows);
   }
 
+  // #endregion
+
+  // #region RREF implementation
+
+  /**
+   * Find the reduced row echelon form (RREF) of this matrix
+   *
+   * <p>A definition of reduced row echelon form can be found on Wikipedia at <a
+   * href="https://en.wikipedia.org/wiki/Row_echelon_form#Reduced_row_echelon_form">Row echelon form
+   * (section Reduced row echelon form)</a>
+   *
+   * <p>This is found using <a href="https://en.wikipedia.org/wiki/Gaussian_elimination">Gaussian
+   * elimination</a>
+   *
+   * @return A matrix representing the RREF of this matrix
+   */
+  public Matrix getReducedForEchelonForm() {
+    // TODO: Implement RREF
+    return this;
+  }
+
+  // #endregion
+
+  // #region Accessors
+
   /// Getter for `rows`
   ///
   /// @return An immutable [List] representing the rows in this matrix
   public List<Row> getRows() {
     return rows;
   }
+
+  // #endregion
+
+  // #region Object overrides
 
   @Override
   public boolean equals(Object o) {
@@ -35,6 +69,10 @@ public class Matrix {
   public String toString() {
     return rows.stream().map(Matrix.Row::toString).collect(Collectors.joining("\n"));
   }
+
+  // #endregion
+
+  // #region Inner classes
 
   /// Represents a row in a [Matrix]
   public static class Row {
@@ -69,4 +107,6 @@ public class Matrix {
       return values.stream().map("%d"::formatted).collect(Collectors.joining(" "));
     }
   }
+
+  // #endregion
 }
