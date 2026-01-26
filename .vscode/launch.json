@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "io.github.stdonnelly.adventofcode.day10/io.github.stdonnelly.adventofcode.day10.App",
+            "projectName": "day-10"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"

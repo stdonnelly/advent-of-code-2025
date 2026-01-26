@@ -2,6 +2,7 @@ package io.github.stdonnelly.adventofcode.day10.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import io.github.stdonnelly.adventofcode.day10.error.NonIntegerDivisionException;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -10,7 +11,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 class MatrixTest {
   @ParameterizedTest
   @MethodSource("matrixWithRREFProvider")
-  void testReducedRowEchelonForm(final Matrix matrix, final Matrix expectedRREF) {
+  void testReducedRowEchelonForm(final Matrix matrix, final Matrix expectedRREF)
+      throws NonIntegerDivisionException {
     assertEquals(expectedRREF, matrix.getReducedForEchelonForm());
   }
 
