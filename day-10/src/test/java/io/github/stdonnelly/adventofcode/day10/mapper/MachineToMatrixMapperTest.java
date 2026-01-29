@@ -46,7 +46,7 @@ class MachineToMatrixMapperTest {
         };
     final Matrix.Row expected =
         new Matrix.Row(
-            Arrays.stream(expectedRowString.split(":")).mapToInt(Integer::parseInt).toArray());
+            Arrays.stream(expectedRowString.split(":")).mapToDouble(Double::parseDouble).toArray());
 
     assertEquals(expected, MAPPER.mapRow(buttonSchematics, joltageRequirement, joltageIndex));
   }

@@ -1,9 +1,11 @@
 package io.github.stdonnelly.adventofcode.day10.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import io.github.stdonnelly.adventofcode.day10.error.NonIntegerDivisionException;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -11,9 +13,20 @@ import org.junit.jupiter.params.provider.MethodSource;
 class MatrixTest {
   @ParameterizedTest
   @MethodSource("matrixWithRREFProvider")
-  void testReducedRowEchelonForm(final Matrix matrix, final Matrix expectedRREF)
-      throws NonIntegerDivisionException {
+  void testReducedRowEchelonForm(final Matrix matrix, final Matrix expectedRREF) {
     assertEquals(expectedRREF, matrix.getReducedForEchelonForm());
+  }
+
+  @ParameterizedTest
+  @MethodSource("matrixWithRREFProvider")
+  void testIsIntegral_true(final Matrix matrix) {
+    assertTrue(matrix.isIntegral());
+  }
+
+  @Test
+  void testIsIntegral_false() {
+    final Matrix matrix = new Matrix(new Matrix.Row(1.0, 2.0), new Matrix.Row(3.5, 4.0));
+    assertFalse(matrix.isIntegral());
   }
 
   static Stream<Arguments> matrixWithRREFProvider() {

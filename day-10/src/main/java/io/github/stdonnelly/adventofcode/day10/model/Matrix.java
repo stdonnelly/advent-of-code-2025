@@ -1,6 +1,5 @@
 package io.github.stdonnelly.adventofcode.day10.model;
 
-import io.github.stdonnelly.adventofcode.day10.error.NonIntegerDivisionException;
 import java.util.Arrays;
 import java.util.OptionalInt;
 import java.util.stream.Collectors;
@@ -52,9 +51,8 @@ public class Matrix {
    * this instance. It will create a new copy.
    *
    * @return A matrix representing the RREF of this matrix
-   * @throws NonIntegerDivisionException If the the division will result in a non-integer value
    */
-  public Matrix getReducedForEchelonForm() throws NonIntegerDivisionException {
+  public Matrix getReducedForEchelonForm() {
     Matrix copiedMatrix = new Matrix(this);
     copiedMatrix.applyReducedRowEchelonForm();
     return copiedMatrix;
@@ -65,21 +63,16 @@ public class Matrix {
   /// See [getReducedRowEchelonForm()][#getReducedForEchelonForm()] for details. The only
   /// difference is that this method *will* modify this instance, rather than returning a new
   /// instance.
-  /// @throws NonIntegerDivisionException If the the division will result in a non-integer value
-  public void applyReducedRowEchelonForm() throws NonIntegerDivisionException {
+  public void applyReducedRowEchelonForm() {
     for (int i = 0; i < rows.length; i++) {
       final OptionalInt pivotColumn = swapWithNextPivot(i);
       if (pivotColumn.isEmpty()) {
         // All remaining rows are zero
         break;
       }
-      // TODO: Remove this and allow martices to be non-integer
-      try {
-        scaleRowToOne(i, pivotColumn.getAsInt());
-      } catch (NonIntegerDivisionException e) {
-        throw new NonIntegerDivisionException("While getting RREF of matrix\n" + this, e);
-      }
+      scaleRowToOne(i, pivotColumn.getAsInt());
       subtractFromAllOtherRows(i, pivotColumn.getAsInt());
+      normalizeZeros();
     }
   }
 
@@ -89,6 +82,43 @@ public class Matrix {
     Row temp = rows[index1];
     rows[index1] = rows[index2];
     rows[index2] = temp;
+  }
+
+  /// Converts all `-0.0` into `0.0` in this matrix
+  ///
+  /// This is necessary because floating point numbers have a negative 0, which
+  /// Arrays.equals(double[], double[]) treats differently.
+  public void normalizeZeros() {
+    for (Row row : rows) {
+      row.normalizeZeros();
+    }
+  }
+
+  /// Determine if this row contains only integers
+  ///
+  /// @return `true` if all numbers in this row are integers or `false` if any value is fractional
+  public boolean isIntegral() {
+    return Arrays.stream(rows).allMatch(Row::isIntegral);
+  }
+
+  /// Determine the degrees of freedom of the system of linear equations represented by this matrix
+  public int findDegreesOfFreedom() {
+    // Create a copy in RREF
+    Matrix matrix = getReducedForEchelonForm();
+
+    // Count the number of pivots in matrix
+    int pivotCount = 0;
+    for (Row row : matrix.rows) {
+      if (row.findPivotColumn().isPresent()) {
+        pivotCount++;
+      } else {
+        break;
+      }
+    }
+
+    // Subtract the number of total variables (excluding the last value in the row, because that is
+    // the constant in the equation)
+    return rows[0].values.length - 1 - pivotCount;
   }
 
   // #endregion
@@ -110,26 +140,10 @@ public class Matrix {
       // This only counts if this is before the currently-known best
       // That could be the case if this is the first known pivot column, or if it is better than the
       // last-known one.
-      // Also, prioritize -1 and 1 as pivots.
-      if (thisPivotColumn.isPresent()) {
-        final int thisPivotColumnValue = thisPivotColumn.getAsInt();
-        final int oldPivotColumnValue = pivotColumn.orElse(-1);
-
-        if (pivotColumn.isEmpty() || (thisPivotColumnValue < oldPivotColumnValue)) {
-          pivotRow = i;
-          pivotColumn = thisPivotColumn;
-        } else {
-          // TODO: Remove this and allow martices to be non-integer
-          // Also, prioritize -1 and 1 as pivots.
-          final int oldPivotValue = rows[pivotRow].getValues()[oldPivotColumnValue];
-          final int newPivotValue = rows[i].getValues()[thisPivotColumnValue];
-          if (oldPivotValue != 1
-              && oldPivotValue != -1
-              && ((newPivotValue == 1) || (newPivotValue == -1))) {
-            pivotRow = i;
-            pivotColumn = thisPivotColumn;
-          }
-        }
+      if (thisPivotColumn.isPresent()
+          && (pivotColumn.isEmpty() || (thisPivotColumn.getAsInt() < pivotColumn.getAsInt()))) {
+        pivotRow = i;
+        pivotColumn = thisPivotColumn;
       }
     }
 
@@ -140,10 +154,8 @@ public class Matrix {
   }
 
   /// Scale the swapped-in row
-  /// @throws NonIntegerDivisionException If the the division will result in a non-integer value
-  private void scaleRowToOne(final int rowIndex, final int pivotColumn)
-      throws NonIntegerDivisionException {
-    final int scale = rows[rowIndex].getValues()[pivotColumn];
+  private void scaleRowToOne(final int rowIndex, final int pivotColumn) {
+    final double scale = rows[rowIndex].getValues()[pivotColumn];
 
     if (scale != 1) {
       rows[rowIndex].divide(scale);
@@ -159,7 +171,7 @@ public class Matrix {
       }
 
       final Row thisRow = rows[i];
-      final int scale = thisRow.getValues()[pivotColumn];
+      final double scale = thisRow.getValues()[pivotColumn];
 
       // Only subtract if this column has a value here
       if (scale != 0) {
@@ -212,13 +224,25 @@ public class Matrix {
 
   /// Represents a row in a [Matrix]
   public static class Row {
-    private final int[] values;
+    private final double[] values;
 
     /// Constructor using array spread operation
     ///
     /// @param values The values in this row. Will be copied to a new array
-    public Row(int... values) {
+    public Row(double... values) {
       this.values = Arrays.copyOf(values, values.length);
+    }
+
+    /// Constructor using ints
+    ///
+    /// @param values The values in this row. Will be copied into an array of `double`
+    public Row(int... values) {
+      double[] doubleValues = new double[values.length];
+
+      for (int i = 0; i < values.length; i++) {
+        doubleValues[i] = values[i];
+      }
+      this.values = doubleValues;
     }
 
     /// Copy constructor
@@ -231,7 +255,7 @@ public class Matrix {
     /// This method will modify the values in this row
     ///
     /// @param scalar The scalar to multiply by
-    public void multiply(final int scalar) {
+    public void multiply(final double scalar) {
       for (int i = 0; i < this.values.length; i++) {
         this.values[i] *= scalar;
       }
@@ -242,15 +266,7 @@ public class Matrix {
     /// This method will modify the values in this row
     ///
     /// @param scalar The scalar to multiply by
-    /// @throws NonIntegerDivisionException If the the division will result in a non-integer value
-    public void divide(final int scalar) throws NonIntegerDivisionException {
-      // First, ensure the division is actually possible. This is done in a separate for loop to
-      // ensure no changes are made before committing
-      // TODO: Remove this and allow martices to be non-integer
-      if (Arrays.stream(values).anyMatch(v -> (v % scalar) != 0)) {
-        throw new NonIntegerDivisionException(
-            String.format("Cannot divide integer row [%s] by scalar %d", this, scalar));
-      }
+    public void divide(final double scalar) {
       for (int i = 0; i < this.values.length; i++) {
         this.values[i] /= scalar;
       }
@@ -272,6 +288,30 @@ public class Matrix {
       }
     }
 
+    /// Converts all `-0.0` into `0.0` in this row
+    ///
+    /// This is necessary because floating point numbers have a negative 0, which
+    /// Arrays.equals(double[], double[]) treats differently.
+    public void normalizeZeros() {
+      for (int i = 0; i < values.length; i++) {
+        if (values[i] == -0.0) {
+          values[i] = 0.0;
+        }
+      }
+    }
+
+    /// Determine if this row contains only integers
+    ///
+    /// @return `true` if all numbers in this row are integers or `false` if any value is fractional
+    public boolean isIntegral() {
+      for (double value : values) {
+        if (value % 1.0 != 0.0) {
+          return false;
+        }
+      }
+      return true;
+    }
+
     /// Find the index of the first nonzero element
     ///
     /// @return The index of the first nonzero element, or `Optional.empty()` if the row is all 0
@@ -287,7 +327,7 @@ public class Matrix {
     /// Getter for `values`
     ///
     /// @return An array representing the values in this row
-    public int[] getValues() {
+    public double[] getValues() {
       return this.values;
     }
 
@@ -303,7 +343,7 @@ public class Matrix {
 
     @Override
     public String toString() {
-      return Arrays.stream(values).boxed().map("%2d"::formatted).collect(Collectors.joining(" "));
+      return Arrays.stream(values).boxed().map("%5.2f"::formatted).collect(Collectors.joining(" "));
     }
   }
 

@@ -1,13 +1,11 @@
 package io.github.stdonnelly.adventofcode.day10;
 
 import io.github.stdonnelly.adventofcode.common.loader.InputLoader;
-import io.github.stdonnelly.adventofcode.day10.error.NonIntegerDivisionException;
 import io.github.stdonnelly.adventofcode.day10.loader.MachineDescriptionLoader;
 import io.github.stdonnelly.adventofcode.day10.mapper.MachineToMatrixMapper;
 import io.github.stdonnelly.adventofcode.day10.model.MachineDescription;
 import io.github.stdonnelly.adventofcode.day10.model.Matrix;
 import io.github.stdonnelly.adventofcode.day10.service.MinimumButtonCounter;
-import io.github.stdonnelly.adventofcode.day10.service.MinimumButtonCounterJoltage;
 import java.io.IOException;
 import java.util.List;
 
@@ -38,17 +36,12 @@ public class App {
 
   static long part2(final List<MachineDescription> input) {
     final MachineToMatrixMapper machineToMatrixMapper = new MachineToMatrixMapper();
-    for (MachineDescription machineDescription : input) {
-      Matrix matrix = machineToMatrixMapper.map(machineDescription);
-      // Check if there are any issues doing this
-      try {
-        matrix.applyReducedRowEchelonForm();
-      } catch (NonIntegerDivisionException e) {
-        e.printStackTrace();
-        return -1;
-      }
-    }
-    MinimumButtonCounterJoltage minimumButtonCounter = new MinimumButtonCounterJoltage();
-    return input.stream().mapToLong(minimumButtonCounter::getMinimumButtonPresses).sum();
+    return input.stream()
+        .map(machineToMatrixMapper::map)
+        .mapToInt(Matrix::findDegreesOfFreedom)
+        .max()
+        .getAsInt();
+    // MinimumButtonCounterJoltage minimumButtonCounter = new MinimumButtonCounterJoltage();
+    // return input.stream().mapToLong(minimumButtonCounter::getMinimumButtonPresses).sum();
   }
 }
