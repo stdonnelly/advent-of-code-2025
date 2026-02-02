@@ -18,6 +18,7 @@
     <module>day-08</module>
     <module>day-09</module>
     <module>day-10</module>
+    <module>day-11</module>
   </modules>
   <properties>
     <maven.compiler.release>25</maven.compiler.release>
