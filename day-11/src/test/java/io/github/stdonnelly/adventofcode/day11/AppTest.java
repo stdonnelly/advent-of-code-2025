@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 class AppTest {
   private static final String EXAMPLE_FILE_NAME = "example_input.txt";
+  private static final String EXAMPLE_FILE_NAME_PART_2 = "example_input_2.txt";
 
   /**
    * Test part 1 with the example input
@@ -32,8 +33,9 @@ class AppTest {
    */
   @Test
   void part2Test() throws IOException {
-    final long EXPECTED = -1L;
-    final InputLoader<NetworkDeviceDto> inputLoader = new NetworkDeviceDtoLoader(EXAMPLE_FILE_NAME);
+    final long EXPECTED = 2L;
+    final InputLoader<NetworkDeviceDto> inputLoader =
+        new NetworkDeviceDtoLoader(EXAMPLE_FILE_NAME_PART_2);
     final List<NetworkDeviceDto> input = inputLoader.load();
     assertEquals(EXPECTED, App.part2(input));
   }

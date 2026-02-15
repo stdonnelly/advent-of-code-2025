@@ -33,6 +33,7 @@ public class App {
   }
 
   static long part2(final List<NetworkDeviceDto> input) {
-    return -1;
+    final Network network = Network.of(input);
+    return network.countPaths("svr", "out", "dac", "fft");
   }
 }
