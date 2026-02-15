@@ -2,6 +2,8 @@
     "java.configuration.updateBuildConfiguration": "interactive",
     "cSpell.words": [
         "adventofcode",
+        "diffplug",
+        "Dtos",
         "joltage",
         "snakeyaml",
         "stdonnelly"
