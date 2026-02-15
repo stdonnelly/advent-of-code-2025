@@ -1,9 +1,11 @@
 package io.github.stdonnelly.adventofcode.day11.model;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /// A device on the network
 ///
@@ -13,10 +15,9 @@ public class NetworkDevice {
 
   // #region Fields
   private final String name;
+  private final PathCountCache pathCountCache;
   private List<String> outputDeviceNames;
   private List<NetworkDevice> outputDevices;
-  // A map from destination to the count of paths. For caching.
-  private Map<String, Long> pathsPerDestination;
 
   // #endregion
 
@@ -27,7 +28,7 @@ public class NetworkDevice {
   /// @param name The name of this device
   public NetworkDevice(String name) {
     this.name = name;
-    this.pathsPerDestination = new HashMap<>();
+    this.pathCountCache = new PathCountCache();
   }
 
   public static NetworkDevice fromDto(NetworkDeviceDto dto) {
@@ -45,30 +46,46 @@ public class NetworkDevice {
 
   /// Count the number of paths to the device named `to`
   ///
+  /// If `intermediates` is present, paths will only be counted if the path contains all
+  /// required intermediate devices. This will not require that the intermediates are contiguous
+  /// or in any order.
+  ///
   /// @param to The name of the device to count paths to
+  /// @param intermediates The required intermediate devices
   /// @return The number of paths from `this` to `to`
   /// @throws java.lang.StackOverflowError If this device is part of a cyclic graph.
-  public long countPaths(String to) {
-    // Check cache
-    Long cachedCount = pathsPerDestination.get(to);
-    if (Objects.nonNull(cachedCount)) {
-      return cachedCount;
+  public long countPaths(final String to, Set<NetworkDevice> intermediates) {
+    long pathCount;
+
+    // If this is one of the required intermediates, temporarily remove from the intermediate set
+    if (intermediates.contains(this)) {
+      // Use a stream with a filter to avoid modifying the original object
+      intermediates =
+          intermediates.stream()
+              .filter(Predicate.not(this::equals))
+              .collect(Collectors.toUnmodifiableSet());
     }
 
-    long pathCount = 0;
+    // Try to get from cache
+    pathCount = pathCountCache.get(to, intermediates);
+    if (pathCount != -1L) {
+      return pathCount;
+    } else {
+      pathCount = 0L;
+    }
 
-    // +1 if `to` is a direct descendant
-    if (this.hasOutput(to)) {
+    // +1 if `to` is a direct descendant and there are no missing intermediates
+    if (this.hasOutput(to) && intermediates.isEmpty()) {
       pathCount++;
     }
 
     // Recursive step
     for (NetworkDevice child : outputDevices) {
-      pathCount += child.countPaths(to);
+      pathCount += child.countPaths(to, intermediates);
     }
 
-    // Put into cache before returning
-    pathsPerDestination.put(to, pathCount);
+    // Before returning, cache the result
+    pathCountCache.put(to, intermediates, pathCount);
     return pathCount;
   }
 
