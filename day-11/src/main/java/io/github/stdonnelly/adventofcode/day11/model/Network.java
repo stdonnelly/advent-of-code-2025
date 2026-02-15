@@ -11,19 +11,21 @@ public record Network(Map<String, NetworkDevice> devices) {
     Objects.requireNonNull(devices);
   }
 
+  /// Construct a new instance from the list of DTOs
   public static Network of(List<NetworkDeviceDto> networkDeviceDtos) {
     return new Network(
-        // Map.copyOf() to make the map unmodifiable
-        Map.copyOf(
-            networkDeviceDtos.stream()
-                // First, map to NetworkDevice
-                .map(NetworkDevice::fromDto)
-                // Then, collect in a HashMap
-                .collect(
-                    HashMap::new,
-                    (Map<String, NetworkDevice> map, NetworkDevice device) ->
-                        map.put(device.getName(), device),
-                    Map::putAll)));
+            // Map.copyOf() to make the map unmodifiable
+            Map.copyOf(
+                networkDeviceDtos.stream()
+                    // First, map to NetworkDevice
+                    .map(NetworkDevice::fromDto)
+                    // Then, collect in a HashMap
+                    .collect(
+                        HashMap::new,
+                        (Map<String, NetworkDevice> map, NetworkDevice device) ->
+                            map.put(device.getName(), device),
+                        Map::putAll)))
+        .buildDeviceTree();
   }
 
   /// Count paths from the device named `from` to the device named `to`
@@ -37,7 +39,11 @@ public record Network(Map<String, NetworkDevice> devices) {
         Objects.requireNonNull(
             devices.get(from),
             () -> String.format("Starting point '%s' not found in device map", from));
-    // TODO
-    return 5L;
+    return start.countPaths(to);
+  }
+
+  private Network buildDeviceTree() {
+    devices.values().forEach(device -> device.setOutputDevices(devices));
+    return this;
   }
 }

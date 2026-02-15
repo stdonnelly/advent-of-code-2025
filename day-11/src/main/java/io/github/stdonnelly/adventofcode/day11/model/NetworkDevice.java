@@ -1,5 +1,6 @@
 package io.github.stdonnelly.adventofcode.day11.model;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -11,9 +12,11 @@ import java.util.Objects;
 public class NetworkDevice {
 
   // #region Fields
+  private final String name;
   private List<String> outputDeviceNames;
   private List<NetworkDevice> outputDevices;
-  private final String name;
+  // A map from destination to the count of paths. For caching.
+  private Map<String, Long> pathsPerDestination;
 
   // #endregion
 
@@ -24,10 +27,49 @@ public class NetworkDevice {
   /// @param name The name of this device
   public NetworkDevice(String name) {
     this.name = name;
+    this.pathsPerDestination = new HashMap<>();
   }
 
   public static NetworkDevice fromDto(NetworkDeviceDto dto) {
     return new NetworkDevice(dto.name()).setOutputDeviceNames(dto.outputDevices());
+  }
+
+  // #endregion
+
+  // #region Public methods
+
+  /// Check if one of the direct outputs is `output`
+  public boolean hasOutput(String output) {
+    return outputDeviceNames.contains(output);
+  }
+
+  /// Count the number of paths to the device named `to`
+  ///
+  /// @param to The name of the device to count paths to
+  /// @return The number of paths from `this` to `to`
+  /// @throws java.lang.StackOverflowError If this device is part of a cyclic graph.
+  public long countPaths(String to) {
+    // Check cache
+    Long cachedCount = pathsPerDestination.get(to);
+    if (Objects.nonNull(cachedCount)) {
+      return cachedCount;
+    }
+
+    long pathCount = 0;
+
+    // +1 if `to` is a direct descendant
+    if (this.hasOutput(to)) {
+      pathCount++;
+    }
+
+    // Recursive step
+    for (NetworkDevice child : outputDevices) {
+      pathCount += child.countPaths(to);
+    }
+
+    // Put into cache before returning
+    pathsPerDestination.put(to, pathCount);
+    return pathCount;
   }
 
   // #endregion
