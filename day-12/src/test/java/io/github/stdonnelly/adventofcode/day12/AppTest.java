@@ -2,11 +2,10 @@ package io.github.stdonnelly.adventofcode.day12;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import io.github.stdonnelly.adventofcode.common.loader.InputLoader;
-import io.github.stdonnelly.adventofcode.day12.loader.ItemLoader;
-import io.github.stdonnelly.adventofcode.day12.model.Item;
+import io.github.stdonnelly.adventofcode.day12.loader.ProblemInputLoader;
+import io.github.stdonnelly.adventofcode.day12.model.ProblemInput;
 import java.io.IOException;
-import java.util.List;
+import java.text.ParseException;
 import org.junit.jupiter.api.Test;
 
 class AppTest {
@@ -18,10 +17,10 @@ class AppTest {
    * @throws IOException if the input loading fails
    */
   @Test
-  void part1Test() throws IOException {
+  void part1Test() throws IOException, ParseException {
     final long EXPECTED = -1L;
-    final InputLoader<Item> inputLoader = new ItemLoader(EXAMPLE_FILE_NAME);
-    final List<Item> input = inputLoader.load();
+    final ProblemInputLoader inputLoader = new ProblemInputLoader(EXAMPLE_FILE_NAME);
+    final ProblemInput input = inputLoader.load();
     assertEquals(EXPECTED, App.part1(input));
   }
 
@@ -31,10 +30,10 @@ class AppTest {
    * @throws IOException if the input loading fails
    */
   @Test
-  void part2Test() throws IOException {
+  void part2Test() throws IOException, ParseException {
     final long EXPECTED = -1L;
-    final InputLoader<Item> inputLoader = new ItemLoader(EXAMPLE_FILE_NAME);
-    final List<Item> input = inputLoader.load();
+    final ProblemInputLoader inputLoader = new ProblemInputLoader(EXAMPLE_FILE_NAME);
+    final ProblemInput input = inputLoader.load();
     assertEquals(EXPECTED, App.part2(input));
   }
 }
