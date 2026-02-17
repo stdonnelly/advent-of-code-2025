@@ -1,14 +1,16 @@
 package io.github.stdonnelly.adventofcode.day12.loader;
 
+import io.github.stdonnelly.adventofcode.day12.model.PresentShape;
 import io.github.stdonnelly.adventofcode.day12.model.ProblemInput;
-import java.io.BufferedReader;
+import io.github.stdonnelly.adventofcode.day12.model.Region;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class ProblemInputLoader {
   protected final String inFileName;
@@ -29,20 +31,43 @@ public class ProblemInputLoader {
   /// @throws ParseException If there is a problem parsing the input
   public ProblemInput load() throws IOException, ParseException {
     try (InputStream is = this.getClass().getClassLoader().getResourceAsStream(inFileName);
-        InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
-        BufferedReader reader = new BufferedReader(isr)) {
+        Scanner scanner = new Scanner(is, StandardCharsets.UTF_8)) {
       if (is == null) {
         throw new FileNotFoundException(inFileName + " not found");
       }
 
-      return load(reader);
+      return load(scanner);
     }
   }
 
-  private ProblemInput load(Reader reader) throws IOException, ParseException {
-    // TODO
+  private ProblemInput load(Scanner scanner) throws IOException, ParseException {
+    scanner.useDelimiter("\n\n");
+
+    // If there is nothing in the input, return an empty ProblemInput
+    if (!scanner.hasNext()) {
+      return new ProblemInput(List.of(), List.of());
+    }
+
+    List<PresentShape> presentShapes = new ArrayList<>();
+    List<Region> regions = new ArrayList<>();
+
     // Parse each present shape
-    // Parse each region
-    return null;
+    // Getting the token before checking if the scanner has next is intentional, since the last
+    // token is the regions section
+    String token = scanner.next();
+    while (scanner.hasNext()) {
+      // Discard the first line because it is just an index.
+      // This parser just assumes the present shapes are in order.
+      token = token.substring(token.indexOf('\n') + 1);
+      presentShapes.add(PresentShape.parse(token));
+
+      token = scanner.next();
+    }
+
+    for (String line : token.split("\n")) {
+      regions.add(Region.parse(line));
+    }
+
+    return new ProblemInput(List.copyOf(presentShapes), List.copyOf(regions));
   }
 }

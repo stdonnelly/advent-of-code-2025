@@ -8,4 +8,21 @@ public record ProblemInput(List<PresentShape> presentShapes, List<Region> region
     Objects.requireNonNull(presentShapes);
     Objects.requireNonNull(regions);
   }
+
+  @Override
+  public final String toString() {
+    StringBuilder stringBuilder = new StringBuilder();
+    for (int i = 0; i < presentShapes.size(); i++) {
+      stringBuilder.append(i);
+      stringBuilder.append(":\n");
+      stringBuilder.append(presentShapes.get(i));
+      stringBuilder.append("\n\n");
+    }
+
+    for (Region region : regions) {
+      stringBuilder.append(region);
+      stringBuilder.append('\n');
+    }
+    return stringBuilder.toString();
+  }
 }
