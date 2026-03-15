@@ -20,6 +20,7 @@
     <module>day-09</module>
     <module>day-10</module>
     <module>day-11</module>
+    <module>day-12</module>
   </modules>
   <properties>
     <maven.compiler.release>25</maven.compiler.release>
