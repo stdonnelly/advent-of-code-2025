@@ -38,6 +38,23 @@ public record PresentShape(boolean[][] grid) {
     return new PresentShape(grid);
   }
 
+  /// Determine the number of squares this shape takes up
+  ///
+  /// This may help to rule out regions that would never work
+  ///
+  /// @return The number of elements in `grid` that are `true`
+  public int size() {
+    int size = 0;
+    for (boolean[] row : grid) {
+      for (boolean square : row) {
+        if (square) {
+          size++;
+        }
+      }
+    }
+    return size;
+  }
+
   @Override
   public final boolean equals(Object other) {
     return other instanceof PresentShape(var otherGrid) && Arrays.deepEquals(grid, otherGrid);

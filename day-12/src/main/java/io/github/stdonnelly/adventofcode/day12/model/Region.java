@@ -37,6 +37,11 @@ public record Region(int width, int length, int[] countPerShape) {
     return new Region(width, length, counts);
   }
 
+  /// Returns `width * length`
+  public int area() {
+    return width * length;
+  }
+
   @Override
   public final boolean equals(Object other) {
     return other instanceof Region(int otherWidth, int otherLength, int[] otherCounts)
